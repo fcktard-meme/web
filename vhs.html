@@ -1,1 +1,112 @@
-wip
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fucktard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 20px;
+        }
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background-size: cover;
+            background-position: center;
+        }
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .video-thumbnail a {
+            display: block;
+            height: 100%;
+            width: 100%;
+            text-decoration: none;
+            color: white;
+        }
+        .video-title {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://raw.githubusercontent.com/fucktardcto/meme/master/fcktard-logo-clean.png" alt="Fucktard Logo" class="logo">
+    </header>
+    <div class="video-grid">
+        <!-- Pour chaque vidéo, créez un élément comme ci-dessous -->
+        <div class="video-thumbnail">
+            <a href="vhs01.mp4">
+                <img src="thumbnail01.jpg" alt="VHS01">
+                <div class="video-title">VHS01</div>
+            </a>
+        </div>
+        <div class="video-thumbnail">
+            <a href="vhs02.mp4">
+                <img src="thumbnail02.jpg" alt="VHS02">
+                <div class="video-title">VHS02</div>
+            </a>
+        </div>
+        <div class="video-thumbnail">
+            <a href="vhs03.mp4">
+                <img src="thumbnail03.jpg" alt="VHS03">
+                <div class="video-title">VHS03</div>
+            </a>
+        </div>
+             <div class="video-thumbnail">
+            <a href="vhs04.mp4">
+                <img src="thumbnail03.jpg" alt="VHS03">
+                <div class="video-title">VHS03</div>
+            </a>
+        </div>
+             <div class="video-thumbnail">
+            <a href="vhs05.mp4">
+                <img src="thumbnail03.jpg" alt="VHS03">
+                <div class="video-title">VHS03</div>
+            </a>
+        </div>
+             <div class="video-thumbnail">
+            <a href="vhs06.mp4">
+                <img src="thumbnail03.jpg" alt="VHS03">
+                <div class="video-title">VHS03</div>
+            </a>
+        </div>
+        <!-- Ajoutez ici les autres miniatures jusqu'à 7 -->
+    </div>
+</body>
+</html>
