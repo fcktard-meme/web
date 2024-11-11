@@ -7,57 +7,26 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: white;
+            margin: 0;
+            padding: 20px;
         }
-        header {
+        h1 {
             text-align: center;
-            padding: 20px 0;
-        }
-        .logo {
-            max-width: 200px;
-            height: auto;
+            font-size: 2em;
+            margin-bottom: 20px;
         }
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 10px;
-            padding: 20px;
+            justify-items: center;
         }
-        .video-thumbnail {
-            position: relative;
+        video {
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            background-size: cover;
-            background-position: center;
+            max-width: 320px;
         }
-        .video-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .video-thumbnail a {
-            display: block;
-            height: 100%;
-            width: 100%;
-            text-decoration: none;
-            color: white;
-        }
-        .video-title {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 14px;
-        }
-        @media (max-width: 600px) {
+        @media screen and (max-width: 600px) {
             .video-grid {
                 grid-template-columns: 1fr;
             }
@@ -65,48 +34,40 @@
     </style>
 </head>
 <body>
-    <header>
-        <img src="https://raw.githubusercontent.com/fucktardcto/meme/master/fcktard-logo-clean.png" alt="Fucktard Logo" class="logo">
-    </header>
+    <h1>Fucktard</h1>
     <div class="video-grid">
-        <!-- Pour chaque vidéo, créez un élément comme ci-dessous -->
-        <div class="video-thumbnail">
-            <a href="vhs.mp4">
-                <img src="thumbnail01.jpg" alt="VHS01">
-                <div class="video-title">VHS01</div>
-            </a>
-        </div>
-        <div class="video-thumbnail">
-            <a href="vhs2.mp4">
-                <img src="thumbnail02.jpg" alt="VHS02">
-                <div class="video-title">VHS02</div>
-            </a>
-        </div>
-        <div class="video-thumbnail">
-            <a href="vhs3.mp4">
-                <img src="thumbnail03.jpg" alt="VHS03">
-                <div class="video-title">VHS03</div>
-            </a>
-        </div>
-             <div class="video-thumbnail">
-            <a href="vhs4.mp4">
-                <img src="thumbnail03.jpg" alt="VHS03">
-                <div class="video-title">VHS03</div>
-            </a>
-        </div>
-             <div class="video-thumbnail">
-            <a href="vhs5.mp4">
-                <img src="thumbnail03.jpg" alt="VHS03">
-                <div class="video-title">VHS03</div>
-            </a>
-        </div>
-             <div class="video-thumbnail">
-            <a href="vhs6.mp4">
-                <img src="thumbnail03.jpg" alt="VHS03">
-                <div class="video-title">VHS03</div>
-            </a>
-        </div>
-        <!-- Ajoutez ici les autres miniatures jusqu'à 7 -->
+        <video controls>
+            <source src="video1.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+        <video controls>
+            <source src="/vhs/vvhs.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+        <video controls>
+            <source src="/vhs/vhs1.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+        <video controls>
+            <source src="/vhs/vhs2.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+        <video controls>
+            <source src="vhs/vhs3.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+        <video controls>
+            <source src="vhs/vhs4.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+        <video controls>
+            <source src="vhs/vhs5.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
+          <video controls>
+            <source src="vhs/vhs6.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéo MP4.
+        </video>
     </div>
 </body>
 </html>
