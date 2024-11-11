@@ -7,70 +7,94 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
             padding: 20px;
             background-color: #f0f0f0;
+            margin: 0;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            justify-items: center;
         }
         .video-container {
-            margin: 10px;
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* Pour un aspect ratio 1:1 */
+            position: relative;
             border: 1px solid #ccc;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
             overflow: hidden;
         }
         video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+        @media (min-width: 900px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
+    <header>
+        <img src="https://raw.githubusercontent.com/fucktardcto/meme/master/fcktard-logo-clean.png" alt="Fucktard Logo" class="logo">
+    </header>
+    <div class="video-grid">
+        <div class="video-container">
+            <video controls>
+                <source src="vhs/vhs.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
 
- 
-    <div class="video-container">
-        <video controls>
-            <source src="vhs/vhs.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-        </video>
-    </div>
+        <div class="video-container">
+            <video controls>
+                <source src="vhs/vhs2.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
 
-    <div class="video-container">
-        <video controls>
-            <source src="vhs/vhs2.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-        </video>
-    </div>
+        <div class="video-container">
+            <video controls>
+                <source src="vhs/vhs3.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
 
-    <div class="video-container">
-        <video controls>
-            <source src="vhs/vhs3.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-        </video>
-    </div>
+        <div class="video-container">
+            <video controls>
+                <source src="vhs/vhs4.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
 
-    <div class="video-container">
-        <video controls>
-            <source src="vhs/vhs4.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-        </video>
-    </div>
-
-    <div class="video-container">
-        <video controls>
-            <source src="vhs/vhs5.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-        </video>
-    </div>
+        <div class="video-container">
+            <video controls>
+                <source src="vhs/vhs5.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
     
-    <div class="video-container">
-        <video controls>
-            <source src="vhs/vhs6.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-        </video>
+        <div class="video-container">
+            <video controls>
+                <source src="vhs/vhs6.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+            </video>
+        </div>
     </div>
 </body>
 </html>
