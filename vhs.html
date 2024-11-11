@@ -6,35 +6,46 @@
     <title>Fucktard Vids</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Ensure the body takes up the full viewport height */
         }
         header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            flex-direction: column; /* Stack elements vertically for centering */
             padding: 10px 20px;
             background-color: #333;
+            width: 80%; /* Limit the width of the header for better centering on larger screens */
+            max-width: 800px; /* Optional: constrain the max width for very wide screens */
         }
         nav {
             display: flex;
+            justify-content: center; /* Center navigation items horizontally */
         }
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             display: flex;
+            flex-wrap: wrap; /* Allow items to wrap if the screen is too narrow */
         }
         nav ul li {
-            margin-right: 15px;
+            margin: 0 15px; /* Space between horizontal list items */
         }
         nav ul li a {
             color: white;
             text-decoration: none;
             padding: 5px 10px;
             transition: background-color 0.3s;
+            font-size: 18px; /* Adjust font size for better readability */
         }
         nav ul li a:hover {
             background-color: #555;
@@ -42,18 +53,21 @@
         .logo {
             max-width: 200px;
             height: auto;
+            margin-bottom: 20px; /* Space between logo and menu items */
         }
         .video-grid {
+            width: 90%; /* Make video grid responsive */
+            max-width: 1200px; /* Optional: constrain the max width */
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             justify-items: center;
-            padding: 20px;
+            margin-top: 20px; /* Space from the header */
         }
         .video-container {
             width: 100%;
             height: 0;
-            padding-bottom: 100%; /* Pour un aspect ratio 1:1 */
+            padding-bottom: 100%; /* For a 1:1 aspect ratio */
             position: relative;
             border: 1px solid #ccc;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -78,9 +92,10 @@
     <header>
         <nav>
             <ul>
-                <li><a href="https://fucktard.meme/">        <img src="https://raw.githubusercontent.com/fucktardcto/meme/master/fcktard-logo-clean.png" alt="Fucktard Logo" class="logo">
-</a></li>
-                 <li><a href="https://dexscreener.com/solana/8tzytnthhufym5xyssza5ne6dh4bf3ieumv6k6shtyav">DEXSCREENER</a></li>
+                <li><a href="https://fucktard.meme/">
+                    <img src="https://raw.githubusercontent.com/fucktardcto/meme/master/fcktard-logo-clean.png" alt="Fucktard Logo" class="logo">
+                </a></li>
+                <li><a href="https://dexscreener.com/solana/8tzytnthhufym5xyssza5ne6dh4bf3ieumv6k6shtyav">DEXSCREENER</a></li>
                 <li><a href="https://www.tensor.trade/trade/fucktards">BUY NFT</a></li>
                 <li><a href="https://maker.fucktard.meme/">MAKE A MEMEr</a></li>
                 <li><a href="https://jpg.fucktard.meme/">JPG LIBRARY</a></li>
@@ -88,7 +103,7 @@
             </ul>
         </nav>
     </header>
-    <div class="video-grid">
+   <div class="video-grid">
         <!-- Contenu vidéo ici -->
         <div class="video-container">
             <video controls>
