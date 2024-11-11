@@ -7,13 +7,37 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f0f0f0;
             margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
         }
         header {
-            text-align: center;
-            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #333;
+        }
+        nav {
+            display: flex;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-right: 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #555;
         }
         .logo {
             max-width: 200px;
@@ -24,6 +48,7 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             justify-items: center;
+            padding: 20px;
         }
         .video-container {
             width: 100%;
@@ -51,50 +76,26 @@
 </head>
 <body>
     <header>
+        <nav>
+            <ul>
+                <li><a href="https://fucktard.meme/">Home</a></li>
+                <li><a href="https://www.tensor.trade/trade/fucktards">Trade</a></li>
+                <li><a href="https://maker.fucktard.meme/">Maker</a></li>
+                <li><a href="https://jpg.fucktard.meme/">JPG</a></li>
+                <li><a href="https://t.me/fcktardportal">Telegram</a></li>
+            </ul>
+        </nav>
         <img src="https://raw.githubusercontent.com/fucktardcto/meme/master/fcktard-logo-clean.png" alt="Fucktard Logo" class="logo">
     </header>
     <div class="video-grid">
+        <!-- Contenu vidéo ici -->
         <div class="video-container">
             <video controls>
                 <source src="vhs/vhs.mp4" type="video/mp4">
                 Votre navigateur ne supporte pas la lecture de vidéos HTML5.
             </video>
         </div>
-
-        <div class="video-container">
-            <video controls>
-                <source src="vhs/vhs2.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-            </video>
-        </div>
-
-        <div class="video-container">
-            <video controls>
-                <source src="vhs/vhs3.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-            </video>
-        </div>
-
-        <div class="video-container">
-            <video controls>
-                <source src="vhs/vhs4.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-            </video>
-        </div>
-
-        <div class="video-container">
-            <video controls>
-                <source src="vhs/vhs5.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-            </video>
-        </div>
-    
-        <div class="video-container">
-            <video controls>
-                <source src="vhs/vhs6.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-            </video>
-        </div>
+        <!-- Ajoutez les autres vidéos ici -->
     </div>
 </body>
 </html>
