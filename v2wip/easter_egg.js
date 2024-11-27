@@ -6,6 +6,9 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'D') {
             event.preventDefault();
             startPenisRain();
+        } else if (event.key === 'O') {
+            event.preventDefault();
+            showVideoPopup();
         }
     }
 });
@@ -72,4 +75,30 @@ function addFallAnimation() {
         `;
         document.head.appendChild(style);
     }
+}
+
+function showVideoPopup() {
+    const videoContainer = document.createElement('div');
+    videoContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; background: black;';
+
+    const video = document.createElement('video');
+    video.src = 'ontheverge.mp4'; // Ensure the path is correct
+    video.controls = true;
+    video.autoplay = true;
+    video.style.cssText = 'width: 80vw; height: 80vh; max-width: 100%; max-height: 100%;'; // Adjust size
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 10001;';
+    closeButton.onclick = function() {
+        videoContainer.remove();
+    };
+
+    videoContainer.appendChild(video);
+    videoContainer.appendChild(closeButton);
+    document.body.appendChild(videoContainer);
+
+    video.addEventListener('ended', function() {
+        videoContainer.remove();
+    });
 }
