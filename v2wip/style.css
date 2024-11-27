@@ -63,13 +63,28 @@ nav ul li a:hover {
 
 .text-content {
     flex: 1 1 10%;
-    margin-left: -10%; /* Réduit pour correspondre à la nouvelle disposition */
+    margin-left: -10%;
     padding-left: 20px;
-    font-size: 1.8em; 
-    font-family: 'Lato', sans-serif; /* Correction de la typo */
-    color: #333; 
+    margin-top:-10px;
+    font-size: 2em; /* Ajuster la taille du texte */
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    text-align: justify;
 }
 
+.text-content h2, .text-content p {
+    color: #E0E0E0;
+    text-shadow:
+        1px 1px 0px #000, /* Base shadow */
+        2px 2px 0px #000, /* Additional layer for relief */
+        2px 2px 3px #333, /* Ajusté la profondeur de l'ombre */
+        3px 3px 3px #666; /* Ajusté pour correspondre à la nouvelle taille */
+    font-weight: bold;
+    
+    background: linear-gradient(to bottom, #ddd 0%, #aaa 10%, #888 50%, #777 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .video-carousel video {
     width: 80%; /* Ajusté pour correspondre à la description */
     height: auto;
