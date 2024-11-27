@@ -1,0 +1,109 @@
+body {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    filter: brightness(90%);
+}
+
+nav {
+    background-color: #1a1a1a;
+    text-align: center; /* Centre le texte dans nav */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0 auto; /* Centre le ul dans nav */
+    padding: 0;
+    display: inline-block; /* Utiliser inline-block pour centrer le menu */
+    width: 80%; /* Le menu prend maintenant 80% de la largeur disponible */
+}
+
+nav ul li {
+    float: none; /* On désactive le float pour centrer */
+    display: inline-block; /* Les items sont maintenant inline */
+}
+
+nav ul li a {
+    display: block;
+    color: #e6e6e6;
+    padding: 16px 20px;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #FFF;
+    background-color: #000; 
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+    max-width: 80%; /* Limite la largeur pour une meilleure lisibilité */
+    margin: 0 auto; /* Centre le contenu */
+}
+
+.video-carousel {
+    flex: 0 0 70%;
+    overflow: hidden;
+    max-width: 50%; /* Ajusté pour correspondre à la description */
+    border-radius: 8px; 
+}
+
+.text-content {
+    flex: 1 1 10%;
+    margin-left: -10%; /* Réduit pour correspondre à la nouvelle disposition */
+    padding-left: 20px;
+    font-size: 1.8em; 
+    font-family: 'Lato', sans-serif; /* Correction de la typo */
+    color: #333; 
+}
+
+.video-carousel video {
+    width: 80%; /* Ajusté pour correspondre à la description */
+    height: auto;
+    display: none;
+    margin: 10px 0; 
+}
+
+.video-carousel video.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .video-carousel, .text-content {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .video-carousel {
+        flex: 0 0 auto;
+        max-width: none;
+    }
+    .text-content {
+        flex: 1 1 auto;
+        margin-left: 0;
+        font-size: 1.5em; 
+    }
+    nav ul {
+        width: 100%; /* Pour que le menu prenne toute la largeur sur mobile */
+    }
+    nav ul li {
+        display: block; /* Pour que les items du menu s'empilent sur mobile */
+        margin-bottom: 10px; /* Espacement entre les items sur mobile */
+    }
+}
