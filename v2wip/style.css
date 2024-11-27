@@ -41,8 +41,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #FFF;
-    background-color: #000; 
+    color: #000;
+    background-color: #FFF; 
 }
 
 .content-wrapper {
