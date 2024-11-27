@@ -109,16 +109,49 @@ nav ul li a:hover {
         flex: 0 0 auto;
         max-width: none;
     }
+
+    .video-carousel video {
+        width: 100%;
+    }
     .text-content {
         flex: 1 1 auto;
         margin-left: 0;
         font-size: 1.5em; 
+        margin-left: -15px;
     }
+    .text-content h2, .text-content p {text-shadow: none;}
     nav ul {
         width: 100%; /* Pour que le menu prenne toute la largeur sur mobile */
+        
     }
     nav ul li {
         display: block; /* Pour que les items du menu s'empilent sur mobile */
         margin-bottom: 10px; /* Espacement entre les items sur mobile */
+        background-color: transparent;
     }
+}
+
+.scattered-images {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+    overflow: visible; /* Change to visible if images might go out of bounds */
+    /* Height will be adjusted via JavaScript */
+}
+
+.scatter-img {
+    width: 20%;
+    max-width: 700px;
+    max-height: 700px;
+    position: absolute;
+    transition: all 0.3s ease;
+    transform: rotate(calc(var(--rotate) * 1deg));
+    z-index: 1; /* Default z-index */
+}
+
+.scatter-img:hover {
+    opacity: 0; /* Make the image disappear on hover */
+    background-color: transparent; /* If you want to remove any background */
 }
