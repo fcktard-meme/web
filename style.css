@@ -1,0 +1,207 @@
+body {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    filter: brightness(90%);
+}
+
+nav {
+    background-color: #000;
+    text-align: center; /* Centre le texte dans nav */
+}
+nav ul {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+}
+
+nav ul li {
+    float: none;
+    display: inline-block;
+    font-size: 1.4em;
+    position: relative;
+}
+
+nav ul li a {
+    display: block;
+    color: #e6e6e6;
+    padding: 16px 20px;
+    text-decoration: none;
+    font-family: 'Roboto Mono', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+nav ul li a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle closest-side, rgba(255, 0, 0, 0.5), transparent);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    z-index: -1;
+}
+
+nav ul li a:hover {
+    color: #FFF;
+    background-color: transparent; 
+}
+
+nav ul li a:hover::before {
+    width: 200%;
+    height: 200%;
+    opacity: 1;
+}
+
+/* Animation for the 'explosion' */
+nav ul li a:hover::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    animation: cannonballExplosion .4s ease-out forwards;
+    z-index: -1;
+}
+
+@keyframes cannonballExplosion {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+    max-width: 80%; /* Limite la largeur pour une meilleure lisibilité */
+    margin: 0 auto; /* Centre le contenu */
+}
+
+.video-carousel {
+    flex: 0 0 70%;
+    overflow: hidden;
+    max-width: 50%; /* Ajusté pour correspondre à la description */
+    border-radius: 8px; 
+}
+
+.text-content {
+    flex: 1 1 10%;
+    margin-left: -10%;
+    padding-left: 20px;
+    margin-top:-10px;
+    font-size: 2em; /* Ajuster la taille du texte */
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    text-align: justify;
+}
+
+.text-content h2, .text-content p {
+    color: #E0E0E0;
+    text-shadow:
+        1px 1px 0px #000, /* Base shadow */
+        2px 2px 0px #000, /* Additional layer for relief */
+        2px 2px 3px #333, /* Ajusté la profondeur de l'ombre */
+        3px 3px 3px #666; /* Ajusté pour correspondre à la nouvelle taille */
+    font-weight: bold;
+    
+    background: linear-gradient(to bottom, #ddd 0%, #aaa 10%, #888 50%, #777 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.video-carousel video {
+    width: 80%; /* Ajusté pour correspondre à la description */
+    height: auto;
+    display: none;
+    margin: 10px 0; 
+}
+
+.video-carousel video.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .video-carousel, .text-content {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .video-carousel {
+        flex: 0 0 auto;
+        max-width: none;
+    }
+
+    .video-carousel video {
+        width: 100%;
+    }
+    .text-content {
+        flex: 1 1 auto;
+        margin-left: 0;
+        font-size: 1.5em; 
+        margin-left: -15px;
+    }
+    .text-content h2, .text-content p {text-shadow: none;}
+    nav ul {
+        width: 100%; /* Pour que le menu prenne toute la largeur sur mobile */
+        
+    }
+    nav ul li {
+        display: block; /* Pour que les items du menu s'empilent sur mobile */
+        margin-bottom: 10px; /* Espacement entre les items sur mobile */
+        background-color: transparent;
+    }
+}
+
+.scattered-images {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+    overflow: visible; /* Change to visible if images might go out of bounds */
+    /* Height will be adjusted via JavaScript */
+}
+
+.scatter-img {
+    width: 20%;
+    max-width: 700px;
+    max-height: 700px;
+    position: absolute;
+    transition: all 0.3s ease;
+    transform: rotate(calc(var(--rotate) * 1deg));
+    z-index: 1; /* Default z-index */
+}
+
+.scatter-img:hover {
+    opacity: 0; /* Make the image disappear on hover */
+    background-color: transparent; /* If you want to remove any background */
+}
