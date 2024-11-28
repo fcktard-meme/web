@@ -47,18 +47,28 @@ document.addEventListener("DOMContentLoaded", function() {
         img.style.top = `${randomY}px`; 
         img.style.zIndex = imgCount - index; // Higher index, lower z-index to be under all others by default
         img.style.opacity = '1';
-        img.style.transition = 'opacity 1s'; // Default transition, will be overridden on hover
+        img.style.transition = 'opacity 1s, transform 0.3s'; // Transition for both opacity and transform
 
-        // Add mouseenter event listener to start fade out
+        // Add mouseenter event listener for zoom and fade out
         img.addEventListener('mouseenter', function(e) {
-            var duration = Math.random() * 2 + 1; // Random duration between 1 and 3 seconds
-            this.style.transition = `opacity ${duration}s`;
+            // Zoom effect
+            this.style.transform = 'scale(1.1)';
+            // Fade out effect
+            this.style.transition = 'opacity 1s, transform 0.3s';
             this.style.opacity = '0';
             setTimeout(() => {
                 this.style.display = 'none'; // After fade out, hide the image
+                this.style.transform = ''; // Reset the scale for next potential use
                 hiddenCount++;
                 checkAllHidden();
-            }, duration * 1000);
+            }, 1000); // Fade out duration set to 1 second
+        });
+
+        // Add mouseleave event listener to reset the scale if not faded out yet
+        img.addEventListener('mouseleave', function(e) {
+            if (this.style.display !== 'none') {
+                this.style.transform = '';
+            }
         });
     });
 
