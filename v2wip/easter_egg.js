@@ -12,6 +12,9 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'P') {
             event.preventDefault();
             showPunchlinePopup();
+        } else if (event.key === 'C') {
+            event.preventDefault();
+            playRandomFucktardAudio();
         }
     }
 });
@@ -161,4 +164,16 @@ function addFightAnimation() {
         `;
         document.head.appendChild(style);
     }
+}
+
+// New function to play random Fucktard audio
+function playRandomFucktardAudio() {
+    const audios = [
+        'fucktard1.mp3',
+        'fucktard2.mp3'
+    ];
+
+    const randomAudio = audios[Math.floor(Math.random() * audios.length)];
+    const audio = new Audio(randomAudio);
+    audio.play();
 }
