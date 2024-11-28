@@ -18,6 +18,9 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'C') {
             event.preventDefault();
             playRandomFucktardAudio();
+        } else if (event.key.toLowerCase() === 'a') {
+            event.preventDefault();
+            openFucktardQuiz();
         }
     }
 });
@@ -51,18 +54,16 @@ function showFeetPicFullscreen() {
     img.src = 'feetpic.jpg'; // Make sure 'feetpic.jpg' exists in your directory
     img.style.cssText = 'max-width: 100%; max-height: 100%; object-fit: contain; animation: zoomIn 1s forwards;';
     
-    // Set up the zoom out animation after 4 seconds
     setTimeout(() => {
         img.style.animation = 'zoomOut 1s forwards';
-    }, 4000); // Start the zoom out after 4 seconds, so the image stays zoomed in for 4 seconds
+    }, 4000);
 
     overlay.appendChild(img);
     document.body.appendChild(overlay);
 
-    // Remove the overlay after 5 seconds
     setTimeout(() => {
         document.body.removeChild(overlay);
-    }, 5000); // Keep the total display time to 5 seconds
+    }, 5000);
 }
 
 function startPenisRain() {
@@ -77,25 +78,21 @@ function startPenisRain() {
         penis.style.cssText = 'position: absolute; user-select: none;';
         penis.style.width = penis.style.height = `${Math.random() * 50 + 20}px`; // Random size between 20px and 70px
 
-        // Randomize position
         penis.style.left = `${Math.random() * window.innerWidth}px`;
         penis.style.top = '0px';
 
-        // Apply animation with random duration
-        const animationDuration = 3 + Math.random() * 5; // Random between 3 to 8 seconds
+        const animationDuration = 3 + Math.random() * 5;
         penis.style.animation = `fall ${animationDuration}s linear forwards`;
         
         rainContainer.appendChild(penis);
         
-        // Remove the penis after it has fallen
         setTimeout(() => {
             rainContainer.removeChild(penis);
         }, animationDuration * 1000);
     }
 
-    const intervalId = setInterval(createPenis, 100); // Create a penis every 100ms
+    const intervalId = setInterval(createPenis, 100);
 
-    // Stop raining after 30 seconds
     setTimeout(() => {
         clearInterval(intervalId);
         const rainEffect = document.getElementById('penisRain');
@@ -122,7 +119,7 @@ function addFallAnimation() {
         style.textContent = `
             @keyframes fall {
                 from { transform: translateY(0) rotate(0deg); }
-                to { transform: translateY(${window.innerHeight}px) rotate(720deg); } /* Rotates twice for fun */
+                to { transform: translateY(${window.innerHeight}px) rotate(720deg); }
             }
         `;
         document.head.appendChild(style);
@@ -134,10 +131,10 @@ function showVideoPopup() {
     videoContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10001; background: black;';
 
     const video = document.createElement('video');
-    video.src = 'ontheverge.mp4'; // Ensure the path is correct
+    video.src = 'ontheverge.mp4'; 
     video.controls = true;
     video.autoplay = true;
-    video.style.cssText = 'width: 80vw; height: 80vh; max-width: 100%; max-height: 100%;'; // Adjust size
+    video.style.cssText = 'width: 80vw; height: 80vh; max-width: 100%; max-height: 100%;';
 
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
@@ -160,7 +157,7 @@ function showPunchlinePopup() {
     overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column;';
 
     const image = document.createElement('img');
-    image.src = 'punchline.jpg'; // Ensure the path is correct
+    image.src = 'punchline.jpg';
     image.style.cssText = 'max-width: 100%; max-height: 80vh;';
 
     const text = document.createElement('p');
@@ -187,10 +184,9 @@ function showPunchlinePopup() {
 
     document.body.appendChild(overlay);
 
-    // Adding a fight animation effect
     overlay.style.animation = 'fightEffect 3s ease-out forwards';
     setTimeout(() => {
-        overlay.style.animation = ''; // Reset animation after it completes
+        overlay.style.animation = ''; 
     }, 3000);
 
     addFightAnimation();
@@ -222,4 +218,155 @@ function playRandomFucktardAudio() {
     const randomAudio = audios[Math.floor(Math.random() * audios.length)];
     const audio = new Audio(randomAudio);
     audio.play();
+}
+
+// Updated function for the Fucktard Quiz with random question selection
+function openFucktardQuiz() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: #000; color: #0f0; font-family: monospace; 
+        padding: 20px; z-index: 10002; overflow: auto;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center;
+    `;
+
+    const terminalContent = document.createElement('div');
+    terminalContent.style.cssText = 'font-size: 16px; text-align: center;';
+
+    const questions = [
+        "Would a fucktard prefer to eat cheese-flavored ice-cream or ice-cream flavored-cheese ?",
+        "What would happen if a fucktard tried to solve world hunger with only memes?",
+        "Can you name five fucktard celebrities who could potentially win a Nobel Prize for being a fucktard?",
+        "If fucktards ruled the world, what would be the national anthem?",
+        "Is it possible for a fucktard to become the first astronaut on Mars? Why or why not?",
+        "How many fucktards does it take to change a lightbulb?",
+        "Describe the perfect fucktard vacation destination.",
+        "What's the life expectancy of a fucktard who only eats pizza?", 
+        "Would a fucktard argue that gravity is a myth, or that it's the only real myth?",
+        "If a fucktard could breathe underwater, why would they need a submarine?",
+        "How many fucktards would it take to argue over which side of a coin has more value?",
+        "Is it more efficient for a fucktard to count sheep or to teach sheep to count fucktards?",
+        "What would happen if a fucktard decided to paint the sky with invisible colors?",
+        "Could a fucktard win a marathon by running backwards or by not running at all?",
+        "If a fucktard believes silence is loud, what kind of music would they listen to?",
+        "How would a fucktard explain why the longest distance between two points is a straight line?",
+        "Does a fucktard believe that the less you know, the more you understand, or vice versa?",
+        "What would a fucktard's strategy be for playing chess with a deck of cards?",
+        "If fucktards invented a new language, would it be silent or made entirely of emojis?",
+        "Can a fucktard convince a door that it's not really there?",
+        "If a fucktard was in charge of time, would they prefer it to go faster or slower by standing still?",
+        "Is a fucktard's favorite color the sound of blue?",
+        "What would a fucktard do to prove that fire is colder than ice?",
+        "Would fucktards elect a king or a potato to rule their land?",
+        "If a fucktard could see the future, would they look forward or backward to see it?",
+        "How would a fucktard describe the smell of a color?",
+        "What would happen if a fucktard tried to plant a tree upside down to grow into the sky?",
+        "Is a fucktard's dream to fly by digging a tunnel to the sky?",
+        "How many fucktards would it take to agree on the exact location of 'up'?",
+        "What would be the signature dish in a fucktard's cookbook that uses only air as an ingredient?",
+        "If fucktards were in charge of education, would they teach history from the future or the past?",
+        "Can a fucktard make it rain by dancing with umbrellas indoors?",
+        "What would a fucktard's reaction be to discovering that the sun is actually a giant disco ball?",
+        "Would fucktards prefer to swim in the desert or walk across the ocean floor?",
+        "If a fucktard wrote a book, would it be about the adventures of a stationary bicycle or the stillness of a running track?",
+        "How would a fucktard explain why the shortest path to success is a zigzag?",
+        "Is a fucktard's idea of a perfect day one where night never ends or day never begins?",
+        "What would a fucktard's plan be to make mountains less steep by climbing them from the top down?",
+        "If a fucktard could talk to plants, would they tell them to grow slower or faster?",
+        "Would a fucktard believe that the opposite of love is love, but from a different angle?",
+        "How would a fucktard react to the news that mirrors are just windows to another dimension?",
+        "What would a fucktard do to prove that cold coffee is hotter than hot coffee?",
+        "If a fucktard was a fashion designer, would they create clothes that are invisible or that change patterns every second?",
+        "Could a fucktard convince a fish that water is dry?",
+        "Is a fucktard's philosophy that ignorance is the highest form of knowledge?",
+        "What would be the result if a fucktard tried to eat a shadow for breakfast?",
+        "How would a fucktard prove that the best way to solve a puzzle is to ignore the pieces?",
+        "If fucktards were philosophers, would they argue that existence is an illusion, or that illusions are the only true existence?",
+        "Can a fucktard teach a dog to bark in sign language?",
+        "What would a fucktard's strategy be for winning a race by starting after the finish line?",
+        "Would a fucktard claim that the center of a circle is on its edge?",
+        "How would a fucktard convince a clock that time is actually a cube?",
+        "If fucktards were to write a dictionary, would they define 'wet' as 'dry' but in liquid form?",
+        "What would a fucktard's approach be to make a soundless song?",
+        "Is a fucktard's dream vacation to visit everywhere by staying home?",
+        "Could a fucktard make a living by selling air in different flavors?",
+        "What would a fucktard say if they discovered that the moon is made of cheese, but only during the day?",
+        "If fucktards were in charge of traffic, would they paint all roads with the colors of silence?",
+    ];
+
+    let questionsAsked = [];
+    let answerCount = 0;
+
+    function askQuestion() {
+        if (answerCount < questions.length) {
+            let questionIndex;
+            do {
+                questionIndex = Math.floor(Math.random() * questions.length);
+            } while (questionsAsked.includes(questionIndex));
+
+            questionsAsked.push(questionIndex);
+            const question = document.createElement('p');
+            question.textContent = questions[questionIndex];
+            terminalContent.appendChild(question);
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.style.cssText = 'margin: 10px 0;';
+
+            const submitButton = document.createElement('button');
+            submitButton.textContent = 'Answer';
+            submitButton.onclick = function() {
+                if (input.value.trim()) {
+                    answerCount++;
+                    terminalContent.removeChild(question);
+                    terminalContent.removeChild(input);
+                    terminalContent.removeChild(submitButton);
+                    if (answerCount < questions.length) {
+                        askQuestion();
+                    } else {
+                        displayTrophy();
+                    }
+                }
+            };
+
+            terminalContent.appendChild(input);
+            terminalContent.appendChild(submitButton);
+        }
+    }
+
+    function displayTrophy() {
+        terminalContent.innerHTML = `<pre>   _______  _______  _______  ______
+  (  ____ \(  ___  )(  ___  )(  ___ \   
+  | (    \/| (   ) || (   ) || (   ) )
+  | |   | || |   | || (___) || |   | |
+  | |   | || |   | ||  ___  || |   | |
+  | |   | || |   | || (   ) || |   ) |
+  | (___) || (___) || )   ( || (__/  )
+  (_______)(_______)|/     \|(______/
+  </pre>
+  <p>CONGRATULATIONS! You are a TRUE FUCKTARD!</p>`;
+    }
+
+    askQuestion();
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Kill the Fucktard AI';
+    closeButton.style.cssText = `
+        bottom: 0px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 14px;
+    `;
+    closeButton.addEventListener('click', function() {
+        overlay.remove();
+    });
+
+    overlay.appendChild(terminalContent);
+    overlay.appendChild(closeButton);
+    document.body.appendChild(overlay);
 }
