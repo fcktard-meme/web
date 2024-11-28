@@ -17,7 +17,7 @@ document.addEventListener('keydown', function(event) {
             playAsciiPenisGame();
         } else if (event.key === 'C') {
             event.preventDefault();
-            playRandomFucktardAudio();
+            playRandomAudio();
         } else if (event.key.toLowerCase() === 'a') {
             event.preventDefault();
             openFucktardQuiz();
@@ -211,6 +211,7 @@ function playRandomFucktardAudio() {
         'fucktard1.mp3',
         'fucktard2.mp3',
         'fucktard3.mp3'
+        'fucktard4.mp3'
     ];
 
     const randomAudio = audios[Math.floor(Math.random() * audios.length)];
