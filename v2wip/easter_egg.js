@@ -9,6 +9,9 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'O') {
             event.preventDefault();
             showVideoPopup();
+        } else if (event.key === 'P') {
+            event.preventDefault();
+            showPunchlinePopup();
         }
     }
 });
@@ -79,7 +82,7 @@ function addFallAnimation() {
 
 function showVideoPopup() {
     const videoContainer = document.createElement('div');
-    videoContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; background: black;';
+    videoContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10001; background: black;';
 
     const video = document.createElement('video');
     video.src = 'ontheverge.mp4'; // Ensure the path is correct
@@ -89,7 +92,7 @@ function showVideoPopup() {
 
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
-    closeButton.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 10001;';
+    closeButton.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 10002;';
     closeButton.onclick = function() {
         videoContainer.remove();
     };
@@ -101,4 +104,61 @@ function showVideoPopup() {
     video.addEventListener('ended', function() {
         videoContainer.remove();
     });
+}
+
+function showPunchlinePopup() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column;';
+
+    const image = document.createElement('img');
+    image.src = 'punchline.jpg'; // Ensure the path is correct
+    image.style.cssText = 'max-width: 100%; max-height: 80vh;';
+
+    const text = document.createElement('p');
+    text.textContent = "Did you know that we have a Punchline bot on our TG?";
+    text.style.cssText = 'color: white; font-size: 2em; font-family: Arial, sans-serif; margin: 20px 0; text-align: center;';
+
+    const link = document.createElement('a');
+    link.href = 'https://t.me/fcktardportal';
+    link.textContent = 'Join our Telegram';
+    link.target = '_blank';
+    link.style.cssText = 'color: #4CAF50; font-size: 1.2em; text-decoration: none;';
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.cssText = 'position: absolute; top: 10px; right: 10px; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer;';
+    closeButton.addEventListener('click', function() {
+        overlay.remove();
+    });
+
+    overlay.appendChild(image);
+    overlay.appendChild(text);
+    overlay.appendChild(link);
+    overlay.appendChild(closeButton);
+
+    document.body.appendChild(overlay);
+
+    // Adding a fight animation effect
+    overlay.style.animation = 'fightEffect 3s ease-out forwards';
+    setTimeout(() => {
+        overlay.style.animation = ''; // Reset animation after it completes
+    }, 3000);
+
+    addFightAnimation();
+}
+
+function addFightAnimation() {
+    if (!document.getElementById('fightAnimationStyle')) {
+        const style = document.createElement('style');
+        style.id = 'fightAnimationStyle';
+        style.textContent = `
+            @keyframes fightEffect {
+                0% { transform: scale(1); }
+                30% { transform: scale(1.05) rotate(1deg); }
+                60% { transform: scale(0.95) rotate(-1deg); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 }
