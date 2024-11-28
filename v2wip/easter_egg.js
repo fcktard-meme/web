@@ -5,7 +5,7 @@ document.addEventListener('keydown', function(event) {
             showFeetPicFullscreen();
         } else if (event.key === 'G') {
             event.preventDefault();
-            activateEasterEgg();
+            glitchPage(); // Changed from activateEasterEgg to glitchPage
         } else if (event.key === 'D') {
             event.preventDefault();
             startPenisRain();
@@ -100,16 +100,6 @@ function startPenisRain() {
     }, 30000);
 
     addFallAnimation();
-}
-
-function activateEasterEgg() {
-    const easterEgg = document.getElementById('easteregg');
-    if (easterEgg) {
-        easterEgg.style.display = 'block';
-        setTimeout(function() {
-            easterEgg.style.display = 'none';
-        }, 5000);
-    }
 }
 
 function addFallAnimation() {
@@ -292,8 +282,7 @@ function openFucktardQuiz() {
         "Is a fucktard's dream vacation to visit everywhere by staying home?",
         "Could a fucktard make a living by selling air in different flavors?",
         "What would a fucktard say if they discovered that the moon is made of cheese, but only during the day?",
-        "If fucktards were in charge of traffic, would they paint all roads with the colors of silence?",
-    ];
+        "If fucktards were in charge of traffic, would they paint all roads with the colors of silence?",    ];
 
     let questionsAsked = [];
     let answerCount = 0;
@@ -369,4 +358,38 @@ function openFucktardQuiz() {
     overlay.appendChild(terminalContent);
     overlay.appendChild(closeButton);
     document.body.appendChild(overlay);
+}
+
+// New function to glitch the page
+function glitchPage() {
+    const glitchStyle = document.createElement('style');
+    glitchStyle.id = 'glitchEffect';
+    glitchStyle.textContent = `
+        .glitch {
+            animation: glitch 0.5s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0px, 0px); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, 2px); }
+        }
+    `;
+    document.head.appendChild(glitchStyle);
+
+    // Apply glitch effect to all elements
+    const elements = document.querySelectorAll('*');
+    elements.forEach(el => {
+        if (el.id !== 'glitchEffect') { // Avoid glitching the glitch style itself
+            el.classList.add('glitch');
+        }
+    });
+
+    // Remove the glitch effect after 5 seconds
+    setTimeout(() => {
+        elements.forEach(el => el.classList.remove('glitch'));
+        document.head.removeChild(glitchStyle);
+    }, 5000);
 }
