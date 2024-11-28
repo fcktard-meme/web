@@ -5,7 +5,7 @@ document.addEventListener('keydown', function(event) {
             showFeetPicFullscreen();
         } else if (event.key === 'G') {
             event.preventDefault();
-            glitchPage(); // Changed from activateEasterEgg to glitchPage
+            glitchPage();
         } else if (event.key === 'D') {
             event.preventDefault();
             startPenisRain();
@@ -14,16 +14,20 @@ document.addEventListener('keydown', function(event) {
             showVideoPopup();
         } else if (event.key === 'P') {
             event.preventDefault();
-            showPunchlinePopup();
+            playAsciiPenisGame();
         } else if (event.key === 'C') {
             event.preventDefault();
             playRandomFucktardAudio();
         } else if (event.key.toLowerCase() === 'a') {
             event.preventDefault();
             openFucktardQuiz();
+        } else if (event.key.toLowerCase() === 'i') {
+            event.preventDefault();
+            showAsciiArt();
         }
     }
 });
+
 
 // First, let's add the CSS animation for the zoom effect
 function addZoomAnimation() {
@@ -392,4 +396,202 @@ function glitchPage() {
         elements.forEach(el => el.classList.remove('glitch'));
         document.head.removeChild(glitchStyle);
     }, 5000);
+}
+
+// Ascii Art 
+
+function showAsciiArt() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: #000; color: #0f0; font-family: monospace; 
+        padding: 20px; z-index: 10003; overflow: auto;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center;
+    `;
+
+    const asciiContainer = document.createElement('pre');
+    asciiContainer.style.cssText = 'font-size: 14px; text-align: center;';
+    asciiContainer.textContent = `
+                                                                                          
+                                                                                          
+                                 .    .....=.                                             
+                                 .-:.. -   . :=-.                                         
+                          -      -     :         .::                                      
+                        ..=......:.::           ...:-.....                                
+                    :::.             -   ...:...           ........:.                     
+                   ::.               :-:.               :.           .:.                  
+                  -.                  .                =::             .:.                
+                 -         .                          .--                :.               
+                --          :.                  ......=::                 :.              
+                =                              :.:..: =:--.                .:             
+                =                              -=    :::    .:...::.         -            
+                :.       ..                   -.=          :.       ::        -           
+                 :=                           .  :         =          -        -          
+                 . -.                                      =           -       -          
+                    ::                                     .:.         .:      .-:        
+                      :=:.:-:                     -          .::.       =       . -.      
+                           =                       -             .-    -.          -      
+                           =              .:::::::::=:.     .::::::=:  -      ..:  -      
+                           =           :::            .:-:::.       --  -.     :. -       
+                          .:                    .::::::. -.  ..:::::..-: .:::    :-       
+                          -             .::::::+@@@+    ::*::.       .-+     .:.:         
+                          -       .==-::       @@@@#      -      =@@@= .-                 
+                         -.           :::::::::+@@@#      +:    -@@@@*-=                  
+                        .-                       .:::::::+  .:::-#%#*==-                  
+                        -                       .::::::::         ::=:.                   
+                        -                      ::::::            ::-                      
+                        -                                          :-                     
+                        -.                                           -.                   
+                         .:                                           +                   
+                           .:.        :::::::.                  .:::::=:                  
+                              -     -:        ..::::::::::::::::.      =                  
+                              .:.  .-   ::::::::::::::::::::::::::::::=:                  
+                                 ::.--                .:::.         ::-                   
+                                   .::=-:::::::::::::.    .:::::==-:                      
+                                       .::.   :.          .:::::                          
+                                           ::  .:-=--:::::.                               
+                                             ....                                         
+                                                                                          
+    `;
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.cssText = `
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 14px;
+    `;
+    closeButton.addEventListener('click', function() {
+        overlay.remove();
+    });
+
+    overlay.appendChild(asciiContainer);
+    overlay.appendChild(closeButton);
+    document.body.appendChild(overlay);
+
+    let intervalTime = 1000; // Temps initial du clignotement (1 seconde)
+    const maxDuration = 6000; // Durée totale de 6 secondes
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+        // Alterne l'affichage du contenu ASCII entre visible et invisible
+        asciiContainer.style.visibility = (asciiContainer.style.visibility === 'hidden') ? 'visible' : 'hidden';
+        
+        // Augmente la vitesse de clignotement en diminuant l'intervalle
+        intervalTime = Math.max(100, intervalTime - 100); // Ne pas descendre en dessous de 100ms
+        clearInterval(interval);
+        setInterval(() => {
+            asciiContainer.style.visibility = (asciiContainer.style.visibility === 'hidden') ? 'visible' : 'hidden';
+        }, intervalTime);
+
+        // Vérifie si 6 secondes se sont écoulées
+        if (Date.now() - startTime > maxDuration) {
+            clearInterval(interval);
+            overlay.remove(); // Ferme l'overlay après 6 secondes
+        }
+    }, intervalTime);
+}
+
+// New function for the ASCII Penis game
+function playAsciiPenisGame() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: #000; color: #0f0; font-family: monospace; 
+        padding: 20px; z-index: 10004; overflow: hidden;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center;
+    `;
+
+    let penisSize = 1;
+    const penisContainer = document.createElement('pre');
+    penisContainer.style.cssText = 'font-size: 14px; text-align: center;';
+    penisContainer.textContent = "8==D";
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.cssText = `
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 14px;
+    `;
+    closeButton.addEventListener('click', function() {
+        overlay.remove();
+    });
+
+    overlay.addEventListener('click', function() {
+        penisSize++;
+        penisContainer.style.fontSize = penisSize * 5 + 'px';
+    });
+
+    overlay.appendChild(penisContainer);
+    overlay.appendChild(closeButton);
+    document.body.appendChild(overlay);
+}
+
+// New function for the ASCII Penis game with zoom effect
+function playAsciiPenisGame() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: #000; color: #0f0; font-family: monospace; 
+        padding: 20px; z-index: 10004; overflow: hidden;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center;
+    `;
+
+    let penisText = "8==D";  // Initial text of the ASCII penis
+    let fontSize = 14;  // Initial font size
+    const penisContainer = document.createElement('pre');
+    penisContainer.style.cssText = `font-size: ${fontSize}px; text-align: center;`;
+    penisContainer.textContent = penisText;
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.cssText = `
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 14px;
+    `;
+    closeButton.addEventListener('click', function() {
+        overlay.remove();
+    });
+
+    // Add an '=' to the penis text before the 'D' and zoom in on each click
+    overlay.addEventListener('click', function() {
+        // Add '=' before 'D'
+        const position = penisText.indexOf('D');  
+        penisText = penisText.slice(0, position) + '=' + penisText.slice(position);  
+        penisContainer.textContent = penisText;  // Update the displayed text
+
+        // Zoom effect: Increase the font size
+        fontSize += 2;  // Increase the font size by 2px with each click
+        penisContainer.style.fontSize = fontSize + 'px';  // Update the font size
+    });
+
+    overlay.appendChild(penisContainer);
+    overlay.appendChild(closeButton);
+    document.body.appendChild(overlay);
 }
