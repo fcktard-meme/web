@@ -24,6 +24,9 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key.toLowerCase() === 'i') {
             event.preventDefault();
             showAsciiArt();
+        } else if (event.key === 'L') {
+            event.preventDefault();
+            startFullScreenChessGame();
         }
     }
 });
@@ -206,7 +209,8 @@ function addFightAnimation() {
 function playRandomFucktardAudio() {
     const audios = [
         'fucktard1.mp3',
-        'fucktard2.mp3'
+        'fucktard2.mp3',
+        'fucktard3.mp3'
     ];
 
     const randomAudio = audios[Math.floor(Math.random() * audios.length)];
@@ -214,7 +218,7 @@ function playRandomFucktardAudio() {
     audio.play();
 }
 
-// Updated function for the Fucktard Quiz with random question selection
+// Updated function for the Fucktard AI with random question selection
 function openFucktardQuiz() {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
@@ -595,3 +599,4 @@ function playAsciiPenisGame() {
     overlay.appendChild(closeButton);
     document.body.appendChild(overlay);
 }
+
