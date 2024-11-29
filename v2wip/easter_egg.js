@@ -206,7 +206,10 @@ function addFightAnimation() {
 function playRandomFucktardAudio() {
     const audios = [
         'fucktard1.mp3',
-        'fucktard2.mp3'
+        'fucktard2.mp3',
+        'fucktard3.mp3',
+        'fucktard4.mp3',
+
     ];
 
     const randomAudio = audios[Math.floor(Math.random() * audios.length)];
