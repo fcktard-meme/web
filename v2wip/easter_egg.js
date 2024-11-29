@@ -27,10 +27,184 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'L') {
             event.preventDefault();
             startLetterCatchGame();
+        } else if (event.key === 'Q') {
+            event.preventDefault();
+            showFucktardQuotesOverlay();
         }
     }
 });
+const fucktardQuotes = [
+    "Just called customer service and got transferred to the department of fucktards.",
+    "If ignorance was a sport, you'd be a fucktard champion.",
+    "He's not just a fucktard, he's the fucktard Olympics gold medalist.",
+    "Stepped into the room, and the fucktard aroma was overwhelming.",
+    "When fucktards unite, stupidity multiplies.",
+    "You're not just a fucktard, you're a fucktard with tenure.",
+    "Ever met a fucktard? You're looking at the self-appointed king.",
+    "Being a fucktard isn't just a state of mind; it's a lifestyle.",
+    "Fucktards: Making the world a stupider place, one act at a time.",
+    "I'd explain it to you, but talking to a fucktard is like explaining algebra to a cat.",
+    "The fucktard parade just marched through town; you were leading it.",
+    "If there's an award for fucktard of the year, you're the perennial winner.",
+    "You're not just any fucktard, you're a deluxe edition.",
+    "Fucktards: They're not just for breakfast anymore.",
+    "He's not a fucktard, he's the fucktard's fucktard.",
+    "When fucktards fly, they'll still land on their face.",
+    "You're like a fucktard magnet; they just gravitate towards you.",
+    "Fucktardery level: Expert.",
+    "I've seen smarter behavior in a bucket of fucktards.",
+    "You're not just a fucktard, you're a PhD in fucktardology.",
+    "Fucktards: They're the reason we have warning labels.",
+    "I bet you could write a book on being a fucktard. It'd be a bestseller in the stupidity genre.",
+    "You managed to make 'fucktard' sound like a compliment. That's a skill.",
+    "If there was a fucktard festival, you'd be the main attraction.",
+    "I didn't know fucktard was an Olympic event, but you're clearly going for gold.",
+    "Some people are just born fucktards, and then there's you.",
+    "Fucktards like you are the reason we can't have nice things.",
+    "You're not just a fucktard, you're a fucktard with a mission statement.",
+    "I've seen less fucktardery in a clown car.",
+    "Fucktards: The gift that keeps on giving... headaches.",
+    "If being a fucktard was a superpower, you'd be the most powerful hero in the universe.",
+    "You're the fucktard that fucktards look up to.",
+    "Calling you a fucktard is an understatement; you're the fucktard's fucktard.",
+    "I thought I had seen it all until I met you, the fucktard supreme.",
+    "Fucktards: Making idiocy an art form since forever.",
+    "You're not just a fucktard, you're a fucktard with benefits.",
+    "If there was a fucktard hall of fame, you'd have your own wing.",
+    "You're the kind of fucktard that makes other fucktards look smart.",
+    "Fucktardation at its finest.",
+    "You're not just a fucktard, you're the director of fucktard operations.",
+    "It's not just a phase; being a fucktard is your life's work.",
+    "Fucktards: Proving that the gene pool could use a lifeguard.",
+    "If fucktardery were an ocean, you'd be the Mariana Trench.",
+    "You're the reason we need more than one word for 'fucktard'.",
+    "Fucktards: The eternal source of comic relief.",
+    "You've elevated fucktard to an art form.",
+    "I didn't believe in fucktards until I met you.",
+    "You're not just a fucktard, you're an ambassador for fucktardkind.",
+    "Congratulations, you've just been upgraded to fucktard pro status.",
+    "If there's a fucktard merit badge, you're wearing a sash full of them.",
+    "Fucktards make 'common sense' sound like an oxymoron.",
+    "You're not just a fucktard; you're a walking argument for population control.",
+    "Your fucktardery is so advanced, it should be studied in universities.",
+    "Fucktards: The only species evolving backward.",
+    "You're the human equivalent of a 'user error'.",
+    "Fucktards: Because 'moron' was too mainstream.",
+    "If there's a fucktard convention, you're the keynote speaker.",
+    "You're not just a fucktard; you're a fucktard with benefits like a bad internet plan.",
+    "Fucktards: Turning social media into a 24/7 comedy show.",
+    "You're the fucktard that other fucktards dream of becoming.",
+    "Fucktard: It's not just what you do, it's who you are."
+];
 
+function showFucktardQuotesOverlay() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(0, 0, 0, 0.9); z-index: 10007; color: #fff; 
+        overflow: hidden; padding: 20px; box-sizing: border-box;
+        display: flex; flex-direction: column;
+    `;
+
+    let quoteContainer = document.createElement('div');
+    quoteContainer.style.cssText = "overflow-y: auto; height: 100%; cursor: pointer;";
+
+    // Function to generate random styles with more colors and fonts
+    function getRandomStyle() {
+        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff9900', '#9900ff', '#0099ff', '#ff6666'];
+        const fonts = ['Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Courier', 'Georgia', 'Comic Sans MS', 'Impact', 'Lucida Console', 'Papyrus'];
+        const fontSize = Math.floor(Math.random() * (30 - 16 + 1)) + 16; // Random size between 16 and 30
+
+        return {
+            color: colors[Math.floor(Math.random() * colors.length)],
+            fontSize: `${fontSize}px`,
+            fontFamily: fonts[Math.floor(Math.random() * fonts.length)]
+        };
+    }
+
+    // Function with typewriter and silly effects
+    function typeWriterEffect(element, text, i, speed) {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            if (text[i] === ' ' && Math.random() > 0.7) { // 30% chance for an "extra" space
+                element.innerHTML += '&nbsp;';
+            }
+            
+            // Apply a random silly effect
+            if (i === text.length - 1) {
+                const effects = [
+                    () => element.style.textShadow = '2px 2px 4px #ff0000',
+                    () => element.style.transform = 'rotate(5deg)',
+                    () => element.style.letterSpacing = `${Math.random() * 5}px`,
+                    () => element.style.textDecoration = 'underline wavy',
+                    () => element.style.animation = 'shake 0.5s infinite'
+                ];
+                effects[Math.floor(Math.random() * effects.length)]();
+            }
+
+            setTimeout(() => typeWriterEffect(element, text, i + 1, speed), speed);
+        }
+    }
+
+    function displayQuotes() {
+        function addQuote() {
+            if (fucktardQuotes.length > 0) {
+                let quote = fucktardQuotes[Math.floor(Math.random() * fucktardQuotes.length)];
+                let quoteElement = document.createElement('p');
+                quoteElement.style.opacity = '0'; // Start with opacity 0 for smooth fade-in
+                quoteElement.style.transition = 'opacity 0.5s ease-in-out';
+                
+                // Apply random styles
+                let style = getRandomStyle();
+                Object.assign(quoteElement.style, style);
+
+                quoteContainer.appendChild(quoteElement);
+
+                setTimeout(() => {
+                    quoteElement.style.opacity = '1'; // Fade in the quote
+                    typeWriterEffect(quoteElement, quote, 0, 30); // Faster typing at 30ms per character
+                }, 100);
+
+                // Schedule the next quote faster
+                setTimeout(addQuote, (quote.length + 1) * 30 + 500); // Wait for this quote to finish typing plus 0.5 seconds
+            }
+        }
+
+        addQuote();  // Start adding quotes
+    }
+
+    overlay.appendChild(quoteContainer);
+    document.body.appendChild(overlay);
+
+    // Start displaying the quotes
+    displayQuotes();
+
+    // Close the overlay when clicked
+    overlay.addEventListener('click', function() {
+        this.remove();
+    });
+
+    // Add CSS for animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// LetterCatchGame
 function startLetterCatchGame() {
     const sequence = ['F', 'U', 'C', 'K', 'T', 'A', 'R', 'D'];
     let currentIndex = 0;
