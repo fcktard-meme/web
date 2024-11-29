@@ -502,7 +502,7 @@ function openFucktardQuiz() {
                     if (answer.parentNode) { // Check if answer is still in the DOM to avoid errors.
                         terminalContent.removeChild(answer);
                     }
-                }, 3000); // 2000 milliseconds = 2 seconds
+                }, 4000); // 2000 milliseconds = 2 seconds
             
                 // Clear the question and input container
                 terminalContent.removeChild(question);
@@ -734,8 +734,6 @@ function showAsciiArt() {
         overlay.remove();
     });
 }
-
-// New function for the ASCII Penis game with zoom effect
 function playAsciiPenisGame() {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
@@ -752,25 +750,14 @@ function playAsciiPenisGame() {
     penisContainer.style.cssText = `font-size: ${fontSize}px; text-align: center;`;
     penisContainer.textContent = penisText;
 
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.style.cssText = `
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        font-family: inherit;
-        font-size: 14px;
-    `;
-    closeButton.addEventListener('click', function() {
-        overlay.remove();
-    });
+    // Function to check if the text has reached full width
+    function checkWidth() {
+        if (penisContainer.offsetWidth >= window.innerWidth) {
+            overlay.remove(); // Close the overlay
+        }
+    }
 
-    // Add an '=' to the penis text before the 'D' and zoom in on each click
+    // Event listener for clicks
     overlay.addEventListener('click', function() {
         // Add '=' before 'D'
         const position = penisText.indexOf('D');  
@@ -780,9 +767,15 @@ function playAsciiPenisGame() {
         // Zoom effect: Increase the font size
         fontSize += 2;  // Increase the font size by 2px with each click
         penisContainer.style.fontSize = fontSize + 'px';  // Update the font size
+
+        // Check if we should close the overlay
+        checkWidth();
     });
 
+    // Append only the penis container to the overlay
     overlay.appendChild(penisContainer);
-    overlay.appendChild(closeButton);
     document.body.appendChild(overlay);
+
+    // Initial check for width, in case the initial size is too close to the screen width
+    setTimeout(checkWidth, 0);  // Use setTimeout to allow the DOM to update
 }
