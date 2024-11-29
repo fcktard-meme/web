@@ -35,15 +35,66 @@ document.addEventListener('keydown', function(event) {
             startPenisPong();
         }
     }
-});
+    });
+    function startPenisPong() {
+        // Créer un overlay temporaire pour l'ASCII art
+        const tempOverlay = document.createElement('div');
+        tempOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: monospace;';
 
-function startPenisPong() {
-    // Créer un overlay temporaire pour l'ASCII art
-    const tempOverlay = document.createElement('div');
-    tempOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: monospace;';
-
-    const artElement = document.createElement('pre');
-    artElement.textContent = `
+        const artElement = document.createElement('pre');
+        artElement.textContent = `
+                                                                            
+                        .=-=                                                                 
+                        .* =--                            :                                  
+              .:--:=+=:..-==:::---.                 ::*--::::.                            
+           .--.       ...         :-:        :-:::::-:::::-. .:--                         
+          =-                        .=     --                    --                       
+        :=                            +  :=                        =.                     
+       =:                              ==:                          =:                    
+      =.                                *                            +                    
+     +                                  -.                           .=                   
+    +                                   :-                            +                   
+   .=                                    +                            +                   
+   ::                                    -                           .-                   
+   -:                                                               .=                    
+   =.                                                              :=                     
+   =.                                                             :-                      
+   .=                                                            --                       
+    +                                                           -:                        
+    .=                                                         =:                         
+     -:                                                       -:                          
+      +.                                                     --                           
+       +                                                     +                            
+       +                                                     +                            
+       =                                                     -.                           
+       =                                            .-:-***=  +                           
+       =                                           -:--: %%:=.:-                          
+       =                                                    :. +                          
+      .-                                             .::::-++ .-                          
+       =        .--::--                               -==::   -.                          
+       +    .-:-::+*=:-*                       :              +                           
+       =   -+-:-:*@%:                     .=   =.             +                           
+       -.  ::     :   :-                   +    =.           -:                           
+        =           :-*=                  :-     =.         .=                            
+        =    .*=++**=-.                   +       +         +                             
+        =      ..                        ::       +        -.                             
+        ::                               =.      :=        =                              
+         =                                :-:-  .:        .-                              
+         =                                  .             +                               
+        ::                                               =.                               
+        .-                                              -:                                
+         -                          .-:  -----:.       =.                                 
+         =                         --  --      .::--:--=::::=-:--:                        
+         -:                       +.  .=                   :-    .---                     
+          :-.                    -:   +                              +                    
+            .--.                 +    +                               =:                  
+               :-:               :=  .+                                 =:                
+                  :-::.           =. .=--:::.   .             :          +                
+                      .--:                 .=*=:.::------:----=-         +                
+                          :-:           :--:                    ----:::--:                
+                             -::::::::::                                                  
+                                                                                          
+                                                              
  ##   ##                                               ######                             
  ##   ##                                               ##   ##                            
  ##   ##   #####   ## ###    ######   #####            ##   ##   #####   ## ###    ###### 
@@ -52,21 +103,28 @@ function startPenisPong() {
    ###    ##       ##        ######  ##                ##       ##   ##  ##   ##   ###### 
    ###     #####   ##            ##   #####            ##        #####   ##   ##       ## 
                              #####                                                 #####  
-
+    
     `;
-    artElement.style.color = '#FF00FF';
+    // Fonction pour changer la couleur aléatoirement
+    function changeColor() {
+        const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFFFFF', '#FFA500', '#800080', '#008000'];
+        artElement.style.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+
     tempOverlay.appendChild(artElement);
     document.body.appendChild(tempOverlay);
 
+    // Démarrer le clignotement de couleur
+    const colorChangeInterval = setInterval(changeColor, 250); // Change color every 250ms
+
     // Fonction pour initier le jeu après le délai
     function startGame() {
+        clearInterval(colorChangeInterval); // Arrêter le changement de couleur
         tempOverlay.remove(); // Supprimer l'overlay temporaire
 
         // Créer l'overlay pour le jeu en plein écran
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 1000;';
-
-        // Ajouter le jeu à l'overlay
         const gameArea = document.createElement('div');
         gameArea.style.cssText = 'width: 100%; height: 100%; box-sizing: border-box; background-color: #000; position: relative;';
         overlay.appendChild(gameArea);
@@ -204,8 +262,9 @@ function startPenisPong() {
     }
 
     // Supprimer l'overlay temporaire après 3 secondes et démarrer le jeu
-    setTimeout(startGame, 1000);
+    setTimeout(startGame, 3000);
 }
+
 const fucktardQuotes = [
     "Just called customer service and got transferred to the department of fucktards.",
     "If ignorance was a sport, you'd be a fucktard champion.",
