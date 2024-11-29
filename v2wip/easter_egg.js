@@ -492,7 +492,7 @@ function openFucktardQuiz() {
                 const response = generateAnswer(question.textContent);
                 const answer = document.createElement('p');
                 answer.textContent = response;
-                answer.style.cssText = 'color: #ff0000; margin-top: 10px;';
+                answer.style.cssText = 'color: #fff; margin-top: 10px;';
             
                 // Insert the answer immediately after the input container.
                 terminalContent.insertBefore(answer, inputContainer.nextSibling);
