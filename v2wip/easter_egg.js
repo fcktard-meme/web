@@ -39,7 +39,7 @@ document.addEventListener('keydown', function(event) {
         }else if (event.key === 'X') {
             event.preventDefault();
             sayFucktardInManyWays();
-        } else if (event.key === 'N') {
+        } else if (event.key === 'J') {
             event.preventDefault();
             showVideoInTheBenin();
         }
