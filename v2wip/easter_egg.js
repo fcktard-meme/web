@@ -48,7 +48,7 @@ document.addEventListener('keydown', function(event) {
 
     function showVideoInTheBenin() {
         const videoSrc = 'inthebeni.mp4'; 
-        const mosaicCount = 10; // Now we want 10 videos
+        const mosaicCount = 20; // Now we want 10 videos
         const overlay = document.createElement('div');
         overlay.style.cssText = `
             position: fixed;
@@ -73,7 +73,7 @@ document.addEventListener('keydown', function(event) {
     
         for (let i = 0; i < mosaicCount; i++) {
             const mosaic = document.createElement('div');
-            const size = Math.random() * 400 + 300; // Taille aléatoire entre 100px et 300px
+            const size = Math.random() * 100 + 400; // Taille aléatoire entre 100px et 300px
             mosaic.style.cssText = `
                 position: absolute;
                 width: ${size}px;
@@ -90,7 +90,7 @@ document.addEventListener('keydown', function(event) {
                 height: 100%;
                 object-fit: cover;
             `;
-            video.loop = false;
+            video.loop = true;
     
             // Randomly select and apply a filter
             if (Math.random() > 0.3) { // 70% chance of applying a filter
