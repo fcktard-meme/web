@@ -30,9 +30,182 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'Q') {
             event.preventDefault();
             showFucktardQuotesOverlay();
+        }  else if (event.key === 'U') {
+            event.preventDefault();
+            startPenisPong();
         }
     }
 });
+
+function startPenisPong() {
+    // Créer un overlay temporaire pour l'ASCII art
+    const tempOverlay = document.createElement('div');
+    tempOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: monospace;';
+
+    const artElement = document.createElement('pre');
+    artElement.textContent = `
+ ##   ##                                               ######                             
+ ##   ##                                               ##   ##                            
+ ##   ##   #####   ## ###    ######   #####            ##   ##   #####   ## ###    ###### 
+  ## ##   ##   ##  ###      ##   ##  ##   ##           ######   ##   ##  ###  ##  ##   ## 
+  ## ##   #######  ##       ##   ##  #######           ##       ##   ##  ##   ##  ##   ## 
+   ###    ##       ##        ######  ##                ##       ##   ##  ##   ##   ###### 
+   ###     #####   ##            ##   #####            ##        #####   ##   ##       ## 
+                             #####                                                 #####  
+
+    `;
+    artElement.style.color = '#FF00FF';
+    tempOverlay.appendChild(artElement);
+    document.body.appendChild(tempOverlay);
+
+    // Fonction pour initier le jeu après le délai
+    function startGame() {
+        tempOverlay.remove(); // Supprimer l'overlay temporaire
+
+        // Créer l'overlay pour le jeu en plein écran
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: black; z-index: 1000;';
+
+        // Ajouter le jeu à l'overlay
+        const gameArea = document.createElement('div');
+        gameArea.style.cssText = 'width: 100%; height: 100%; box-sizing: border-box; background-color: #000; position: relative;';
+        overlay.appendChild(gameArea);
+
+        // Ajouter le filet central
+        const net = document.createElement('div');
+        net.style.cssText = 'position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: transparent;';
+        gameArea.appendChild(net);
+
+        // Scores
+        let playerScore = 0;
+        let robotScore = 0;
+        const scorePlayer = document.createElement('div');
+        scorePlayer.style.cssText = 'position: absolute; top: 10px; right: 50px; font-size: 20px; color: #FF00FF;';
+        const scoreRobot = document.createElement('div');
+        scoreRobot.style.cssText = 'position: absolute; bottom: 10px; left: 50px; font-size: 20px; color: #00FF00;';
+        gameArea.appendChild(scorePlayer);
+        gameArea.appendChild(scoreRobot);
+
+        // Joueur (en haut)
+        const player = document.createElement('div');
+        player.style.cssText = 'position: absolute; top: 10px; left: 50%; transform: translateX(-50%); font-size: 30px; color: #FF00FF;';
+        player.textContent = '8======D';
+        gameArea.appendChild(player);
+
+        // Robot (en bas)
+        const robot = document.createElement('div');
+        robot.style.cssText = 'position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 30px; color: #00FF00;';
+        robot.textContent = '8======D';
+        gameArea.appendChild(robot);
+
+        // La balle
+        const ball = document.createElement('div');
+        ball.style.cssText = 'position: absolute; width: 10px; height: 10px; background-color: #FFFFFF; border-radius: 50%; left: 50%; top: 50%;';
+        gameArea.appendChild(ball);
+
+        document.body.appendChild(overlay);
+
+        // Variables pour le jeu
+        let playerPosX = gameArea.offsetWidth / 2 - player.offsetWidth / 2;
+        let robotPosX = gameArea.offsetWidth / 2 - robot.offsetWidth / 2;
+        let ballPosX = gameArea.offsetWidth / 2;
+        let ballPosY = gameArea.offsetHeight / 2;
+        let ballSpeedX = 5 * (Math.random() > 0.5 ? 1 : -1);
+        let ballSpeedY = 5;
+
+        // Fonction pour jouer un son aléatoire
+        function playRandomSound() {
+            const sounds = [
+                'fucktard1.mp3',
+                'fucktard2.mp3',
+                'fucktard3.mp3',
+                'fucktard4.mp3'
+            ];
+            const audio = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
+            audio.play().catch(e => console.log('Audio play failed:', e));
+        }
+
+        // Fonction pour mettre à jour la position de la balle et des joueurs
+        function updateGame() {
+            ballPosX += ballSpeedX;
+            ballPosY += ballSpeedY;
+
+            // Rébond sur les murs gauche et droit
+            if (ballPosX <= 0 || ballPosX >= gameArea.offsetWidth - 10) {
+                ballSpeedX *= -1;
+            }
+
+            // Rébond sur les joueurs avec son
+            if (ballPosY <= player.offsetHeight && ballPosX > playerPosX && ballPosX < playerPosX + player.offsetWidth) {
+                playRandomSound();
+                ballSpeedY *= -1;
+            }
+            if (ballPosY >= gameArea.offsetHeight - robot.offsetHeight - 10 && ballPosX > robotPosX && ballPosX < robotPosX + robot.offsetWidth) {
+                playRandomSound();
+                ballSpeedY *= -1;
+            }
+
+            // Score
+            if (ballPosY <= 0) {
+                robotScore++;
+                resetBall();
+            }
+            if (ballPosY >= gameArea.offsetHeight) {
+                playerScore++;
+                resetBall();
+            }
+
+            // Mise à jour des scores
+            scorePlayer.textContent = playerScore;
+            scoreRobot.textContent = robotScore;
+
+            // Déplacement du robot (simplifié)
+            robotPosX = ballPosX - robot.offsetWidth / 2;
+            robotPosX = Math.max(0, Math.min(gameArea.offsetWidth - robot.offsetWidth, robotPosX));
+
+            // Mise à jour des positions des éléments dans le DOM
+            ball.style.left = `${ballPosX}px`;
+            ball.style.top = `${ballPosY}px`;
+            player.style.left = `${playerPosX}px`;
+            robot.style.left = `${robotPosX}px`;
+
+            requestAnimationFrame(updateGame);
+        }
+
+        function resetBall() {
+            ballPosX = gameArea.offsetWidth / 2;
+            ballPosY = gameArea.offsetHeight / 2;
+            ballSpeedX = 5 * (Math.random() > 0.5 ? 1 : -1);
+            ballSpeedY = 5;
+        }
+
+        // Contrôle du joueur
+        const playerMovementHandler = (e) => {
+            const moveSpeed = 10;
+            switch(e.key) {
+                case 'ArrowLeft':
+                    playerPosX = Math.max(0, playerPosX - moveSpeed);
+                    break;
+                case 'ArrowRight':
+                    playerPosX = Math.min(gameArea.offsetWidth - player.offsetWidth, playerPosX + moveSpeed);
+                    break;
+            }
+        };
+        document.addEventListener('keydown', playerMovementHandler);
+
+        // Écouteur d'événements pour fermer le jeu
+        overlay.addEventListener('click', function() {
+            this.remove();
+            document.removeEventListener('keydown', playerMovementHandler);
+        });
+
+        // Démarrer le jeu
+        updateGame();
+    }
+
+    // Supprimer l'overlay temporaire après 3 secondes et démarrer le jeu
+    setTimeout(startGame, 1000);
+}
 const fucktardQuotes = [
     "Just called customer service and got transferred to the department of fucktards.",
     "If ignorance was a sport, you'd be a fucktard champion.",
@@ -185,22 +358,7 @@ function showFucktardQuotesOverlay() {
     });
 
     // Add CSS for animations
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-    `;
+
     document.head.appendChild(style);
 }
 
