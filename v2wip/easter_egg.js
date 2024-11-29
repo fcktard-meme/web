@@ -502,7 +502,7 @@ function openFucktardQuiz() {
                     if (answer.parentNode) { // Check if answer is still in the DOM to avoid errors.
                         terminalContent.removeChild(answer);
                     }
-                }, 2000); // 2000 milliseconds = 2 seconds
+                }, 3000); // 2000 milliseconds = 2 seconds
             
                 // Clear the question and input container
                 terminalContent.removeChild(question);
