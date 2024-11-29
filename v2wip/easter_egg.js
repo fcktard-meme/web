@@ -41,12 +41,133 @@ document.addEventListener('keydown', function(event) {
             sayFucktardInManyWays();
         } else if (event.key === 'N') {
             event.preventDefault();
-            glitch();
+            showVideoInTheBenin();
         }
     }
     });
 
+    function showVideoInTheBenin() {
+        const videoSrc = 'inthebeni.mp4'; 
+        const mosaicCount = 10; // Now we want 10 videos
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 9999;
+            overflow: hidden;
+        `;
     
+        const filters = [
+            'grayscale(100%)', // Noir et blanc
+            'invert(100%)', // Contraste inversé
+            'sepia(100%)', // Sépia
+            'hue-rotate(180deg)', // Rotation de teinte
+            'saturate(5)', // Saturation élevée
+            'brightness(0.5)', // Assombrissement
+            'contrast(200%)' // Contraste élevé
+        ];
+    
+        for (let i = 0; i < mosaicCount; i++) {
+            const mosaic = document.createElement('div');
+            const size = Math.random() * 400 + 300; // Taille aléatoire entre 100px et 300px
+            mosaic.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                overflow: hidden;
+            `;
+    
+            const video = document.createElement('video');
+            video.src = videoSrc;
+            video.controls = false; 
+            video.muted = i !== 0; // Mute all videos except the first one
+            video.style.cssText = `
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            `;
+            video.loop = false;
+    
+            // Randomly select and apply a filter
+            if (Math.random() > 0.3) { // 70% chance of applying a filter
+                const randomIndex = Math.floor(Math.random() * filters.length);
+                video.style.filter = filters[randomIndex];
+            }
+    
+            mosaic.appendChild(video);
+            overlay.appendChild(mosaic);
+    
+            // Déplacement aléatoire des mosaïques
+            function moveMosaic(mosaicElement, size) {
+                const newX = Math.random() * (window.innerWidth - size);
+                const newY = Math.random() * (window.innerHeight - size);
+                mosaicElement.style.transition = `all ${Math.random() * 3 + 2}s linear`;
+                mosaicElement.style.left = `${newX}px`;
+                mosaicElement.style.top = `${newY}px`;
+            }
+    
+            mosaic.addEventListener('click', function(e) {
+                e.stopPropagation(); // Empêche la propagation de l'évènement click pour ne pas fermer immédiatement
+                this.style.transition = 'transform 0.5s ease-in-out';
+                const randomScale = Math.random() * 2 + 1;
+                this.style.transform = `scale(${randomScale})`; // Zoom aléatoire
+    
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)'; // Remise à l'échelle normale
+                }, 500);
+    
+                // Apply glitch effect randomly to some videos
+                if (Math.random() > 0.5) { // 50% chance of applying glitch effect
+                    video.style.filter = `blur(${Math.random() * 3}px) saturate(${Math.random() * 2}) contrast(${Math.random() * 2})`;
+                    setTimeout(() => {
+                        video.style.filter = video.style.filter ? video.style.filter : 'none'; // Retour à l'état normal ou filtre original après un certain temps
+                    }, 300);
+                }
+            });
+    
+            video.addEventListener('loadedmetadata', () => {
+                video.play();
+                moveMosaic(mosaic, size); // Déplacement initial
+    
+                // Animation continue
+                setInterval(() => moveMosaic(mosaic, size), Math.random() * 10000 + 5000);
+    
+                // Random zoom during playback
+                setInterval(() => {
+                    if (Math.random() < 0.1) { // 10% chance every 5 seconds
+                        const randomScale = Math.random() * 2 + 1;
+                        mosaic.style.transition = 'transform 0.5s ease-in-out';
+                        mosaic.style.transform = `scale(${randomScale})`;
+                        setTimeout(() => {
+                            mosaic.style.transform = 'scale(1)';
+                        }, 500);
+                    }
+                }, 5000); // Check every 5 seconds
+            });
+    
+            video.addEventListener('ended', () => {
+                if (Array.from(overlay.querySelectorAll('video')).every(v => v.ended)) {
+                    overlay.remove();
+                }
+            });
+        }
+    
+        // Fermeture par clic n'importe où sur l'overlay
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.remove();
+            }
+        });
+    
+        document.body.appendChild(overlay);
+    }
+    
+    // Pour utiliser la fonction
+    // showVideoInTheBenin();
     function sayFucktardInManyWays() {
         // Vérifions si la synthèse vocale est supportée par le navigateur
         if ('speechSynthesis' in window) {
