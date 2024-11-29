@@ -33,9 +33,287 @@ document.addEventListener('keydown', function(event) {
         }  else if (event.key === 'U') {
             event.preventDefault();
             startPenisPong();
+        }else if (event.key === 'T') {
+            event.preventDefault();
+            startSnakeGame();
+        }else if (event.key === 'X') {
+            event.preventDefault();
+            sayFucktardInManyWays();
+        } else if (event.key === 'N') {
+            event.preventDefault();
+            glitch();
         }
     }
     });
+
+    
+    function sayFucktardInManyWays() {
+        // Vérifions si la synthèse vocale est supportée par le navigateur
+        if ('speechSynthesis' in window) {
+            const synth = window.speechSynthesis;
+            const voices = synth.getVoices(); // Récupère les voix disponibles
+    
+            // Liste des différentes manières de dire "fucktard"
+            const waysToSayFucktard = [
+                "Fucktard",
+                "F-U-C-K-T-A-R-D",
+                "Fucking retard",
+                "You absolute fucktard",
+                "What a fucktard",
+                "Complete fucktard",
+                "Fucktard, seriously?",
+                "Oh my god, what a fucktard",
+                "That's a classic fucktard move",
+                "Such a fucktard",
+                "Total fucktard",
+                "Certified fucktard",
+                "Epic fucktard",
+                "Grade A fucktard",
+                "A real fucktard",
+                "Prize-winning fucktard",
+                "The epitome of fucktard",
+                "Fucktard of the year",
+                "He's a fucktard, isn't he?",
+                "Unbelievable fucktard",
+                "Just a fucktard",
+                "A walking fucktard",
+                "The living definition of fucktard",
+                "Are you kidding me? Fucktard!",
+                "A textbook fucktard",
+                "Fucktard extraordinaire",
+                "Fucktard alert",
+                "A fucktard's fucktard",
+                "That's some next-level fucktardery",
+                "Fucktard parade",
+                "A fucktard's guide to life",
+                "Fucktard genius",
+                "Fucktard supreme",
+                "A masterclass in fucktardery",
+                "Fucktard hall of fame",
+                "Fucktard chronicles",
+                "Fucktard 101",
+                "Fucktard olympics",
+                "A fucktard's anthem",
+                "A world-class fucktard",
+                "Fucktard in chief",
+                "Fucktard level: expert",
+                "Fucktard of the century",
+                "Fucktard, with honors",
+                "A fucktard's legacy",
+                "Fucktard philosophy",
+                "Fucktard prodigy",
+                "The fucktard's handbook",
+                "Fucktard at heart",
+                "A PhD in fucktardery"
+            ];
+    
+            // Mélanger les phrases
+            const shuffledPhrases = waysToSayFucktard.sort(() => 0.5 - Math.random());
+    
+            // Fonction pour dire un texte avec une voix aléatoire
+            function speakText(text) {
+                return new Promise((resolve, reject) => {
+                    // Choisir une voix aléatoire parmi celles disponibles
+                    const voiceIndex = Math.floor(Math.random() * voices.length);
+                    const utterThis = new SpeechSynthesisUtterance(text);
+                    utterThis.voice = voices[voiceIndex];
+                    utterThis.onend = resolve;
+                    // Ajoute un reject pour gérer l'annulation
+                    utterThis.onerror = reject;
+                    synth.speak(utterThis);
+                });
+            }
+    
+            // Fonction pour arrêter la parole
+            function stopSpeech() {
+                if (synth.speaking) {
+                    synth.cancel();
+                }
+            }
+    
+            // On enchaîne les phrases mélangées avec un délai aléatoire pour une meilleure expérience audio
+            async function sayAllWays() {
+                try {
+                    for (let phrase of shuffledPhrases) {
+                        await speakText(phrase);
+                        // Attente d'un délai aléatoire entre 1 et 3 secondes
+                        await new Promise(resolve => setTimeout(resolve, Math.random() * 2000 + 1000));
+                    }
+                } catch (error) {
+                    // On ignore l'erreur si la synthèse est annulée
+                }
+            }
+    
+            // Attendre que les voix soient chargées (pour certains navigateurs)
+            speechSynthesis.onvoiceschanged = () => {
+                // Ajouter un écouteur d'événements pour les clics sur le document
+                document.addEventListener('click', stopSpeech);
+                sayAllWays();
+            };
+    
+        } else {
+            console.log("Désolé, votre navigateur ne supporte pas la synthèse vocale.");
+        }
+    }
+    
+    // Pour utiliser la fonction
+    // sayFucktardInManyWays();
+
+    // VERGE
+
+    function startSnakeGame() {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+            background-color: black; z-index: 10001;
+        `;
+    
+        const gameContainer = document.createElement('div');
+        gameContainer.style.cssText = `
+            width: 90%; height: 90%; border: none;
+            background-color: #000000; position: relative;
+        `;
+        overlay.appendChild(gameContainer);
+    
+        // Créer le serpent initial
+        let snake = [{x: 15, y: 15}];
+        let food = {x: 10, y: 10};
+        let dx = 0;
+        let dy = 0;
+        const gridSize = 20;
+        let speed = 100; // Initial speed
+        let foodCount = 0;
+        let gameStarted = false;
+    
+        // Créer une fonction pour dessiner le jeu
+        function drawGame() {
+            gameContainer.innerHTML = ''; // Efface le contenu précédent
+    
+            // Dessiner le serpent
+            snake.forEach((segment, index) => {
+                const snakePart = document.createElement('div');
+                snakePart.style.cssText = `
+                    position: absolute;
+                    width: ${gridSize}px;
+                    height: ${gridSize}px;
+                    line-height: ${gridSize}px;
+                    text-align: center;
+                    font-size: ${gridSize - 5 }px;
+                    left: ${segment.x * gridSize}px;
+                    top: ${segment.y * gridSize}px;
+                    color: #FF69B4; // Change color to fluorescent pink
+                `;
+                if (index === 0) {
+                    snakePart.textContent = 'D'; // Head
+                } else if (index === snake.length - 1) {
+                    snakePart.textContent = '8'; // Feet
+                } else {
+                    snakePart.textContent = '='; // Body
+                }
+                gameContainer.appendChild(snakePart);
+            });
+    
+            // Dessiner la nourriture
+            const foodElement = document.createElement('div');
+            foodElement.style.cssText = `
+                position: absolute;
+                width: ${gridSize}px;
+                height: ${gridSize}px;
+                background-color: #FFF;
+                left: ${food.x * gridSize}px;
+                top: ${food.y * gridSize}px;
+            `;
+            gameContainer.appendChild(foodElement);
+        }
+    
+        // Mettre à jour le jeu
+        function updateGame() {
+            if (!gameStarted) return; // Ne pas mettre à jour le jeu si le jeu n'a pas commencé
+    
+            const head = {
+                x: snake[0].x + dx,
+                y: snake[0].y + dy
+            };
+    
+            // Vérifier les collisions
+            if (head.x < 0 || head.x >= Math.floor(window.innerWidth / gridSize) || head.y < 0 || head.y >= Math.floor(window.innerHeight / gridSize) || snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                gameContainer.innerHTML = '<h2 style="color: white; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">REKT FUCKTARD, BUY THE DIP !</h2>';
+                setTimeout(() => {
+                    overlay.remove(); // Remove the overlay
+                    document.removeEventListener('keydown', handleKeydown); // Remove the keydown event listener
+                }, 3000); // Wait for 3 seconds before closing
+                return;
+            }
+    
+            snake.unshift(head); // Ajouter la nouvelle tête
+    
+            // Si le serpent mange la nourriture
+            if (head.x === food.x && head.y === food.y) {
+                foodCount++;
+                // Augmenter la vitesse en fonction de la longueur du serpent
+                speed = Math.max(50, Math.floor(100 - snake.length * 2)); // Diminuer la vitesse (vitesse augmente) quand le serpent grandit
+                food = {
+                    x: Math.floor(Math.random() * Math.floor(window.innerWidth / gridSize)),
+                    y: Math.floor(Math.random() * Math.floor(window.innerHeight / gridSize))
+                };
+            } else {
+                snake.pop(); // Retirer la queue si pas de nourriture mangée
+            }
+    
+            drawGame();
+            setTimeout(updateGame, speed); // Utiliser la vitesse ajustée
+        }
+    
+        // Écouteur d'événement pour le mouvement du serpent
+        function handleKeydown(event) {
+            if (!gameStarted && (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+                gameStarted = true;
+                // Set the direction only after the game has started
+                switch (event.key) {
+                    case 'ArrowUp':    dy = -1; dx = 0; break;
+                    case 'ArrowDown':  dy = 1;  dx = 0; break;
+                    case 'ArrowLeft':  dx = -1; dy = 0; break;
+                    case 'ArrowRight': dx = 1;  dy = 0; break;
+                }
+                updateGame(); // Start the game loop only after setting the initial direction
+            } else if (gameStarted) {
+                // Prevent immediate direction reversal
+                switch (event.key) {
+                    case 'ArrowUp':    if (dy === 0) { dx = 0; dy = -1; } break;
+                    case 'ArrowDown':  if (dy === 0) { dx = 0; dy = 1; } break;
+                    case 'ArrowLeft':  if (dx === 0) { dx = -1; dy = 0; } break;
+                    case 'ArrowRight': if (dx === 0) { dx = 1; dy = 0; } break;
+                }
+            }
+        }
+    
+        document.addEventListener('keydown', handleKeydown);
+    
+        // Fermer le jeu quand on clique sur l'overlay
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.body.removeChild(this);
+                document.removeEventListener('keydown', handleKeydown);
+            }
+        });
+    
+        document.body.appendChild(overlay);
+        drawGame();
+    
+        // Afficher un message pour lancer le jeu
+        gameContainer.innerHTML = `
+        <pre style="color: white; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+     ##   #  #        ###   #  #  ####        #  #  ####  ###    ##   ####  
+    #  #  ## #         #    #  #  #           #  #  #     #  #  #  #  #     
+    #  #  ## #         #    ####  ###         #  #  ###   #  #  #     ###   
+    #  #  # ##         #    #  #  #           #  #  #     ###   # ##  #     
+    #  #  # ##         #    #  #  #            ##   #     # #   #  #  #     
+     ##   #  #         #    #  #  ####         ##   ####  #  #   ###  ####  
+                                                                            
+    
+        </pre>`;
+    }
+
     function startPenisPong() {
         // Créer un overlay temporaire pour l'ASCII art
         const tempOverlay = document.createElement('div');
