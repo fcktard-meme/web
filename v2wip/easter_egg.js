@@ -17,16 +17,13 @@ document.addEventListener('keydown', function(event) {
             playAsciiPenisGame();
         } else if (event.key === 'C') {
             event.preventDefault();
-            playRandomAudio();
+            playRandomFucktardAudio();
         } else if (event.key.toLowerCase() === 'a') {
             event.preventDefault();
             openFucktardQuiz();
         } else if (event.key.toLowerCase() === 'i') {
             event.preventDefault();
             showAsciiArt();
-        } else if (event.key === 'L') {
-            event.preventDefault();
-            startFullScreenChessGame();
         }
     }
 });
@@ -209,9 +206,7 @@ function addFightAnimation() {
 function playRandomFucktardAudio() {
     const audios = [
         'fucktard1.mp3',
-        'fucktard2.mp3',
-        'fucktard3.mp3'
-        'fucktard4.mp3'
+        'fucktard2.mp3'
     ];
 
     const randomAudio = audios[Math.floor(Math.random() * audios.length)];
@@ -600,4 +595,3 @@ function playAsciiPenisGame() {
     overlay.appendChild(closeButton);
     document.body.appendChild(overlay);
 }
-
