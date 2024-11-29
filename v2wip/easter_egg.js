@@ -509,7 +509,7 @@ function openFucktardQuiz() {
                 terminalContent.removeChild(inputContainer);
             
                 // Ask the next question after the answer has been shown and removed.
-                setTimeout(askQuestion, 1500); // Ensure askQuestion is called after the answer is removed
+                setTimeout(askQuestion, 2000); // Ensure askQuestion is called after the answer is removed
             });
             inputContainer.appendChild(userInput);
             inputContainer.appendChild(submitButton);
