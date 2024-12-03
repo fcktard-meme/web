@@ -1,0 +1,337 @@
+body {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    filter: brightness(90%);
+    margin-bottom: -4px; 
+}
+
+nav {
+    background-color: #000;
+    text-align: center;
+    position: relative;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #e6e6e6;
+    font-size: 2em;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    z-index: 1001;
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+}
+
+.nav-links li {
+    float: none;
+    display: inline-block;
+    font-size: 1.5em;
+    position: relative;
+}
+
+.nav-links li a {
+    display: block;
+    color: #e6e6e6;
+    padding: 16px 20px;
+    text-decoration: none;
+    font-family: 'Roboto Mono', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.nav-links li a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle closest-side, rgba(255, 0, 0, 0.5), transparent);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.nav-links li a:hover {
+    color: #FFF;
+    background-color: transparent; 
+}
+
+.nav-links li a:hover::before {
+    width: 200%;
+    height: 200%;
+    opacity: 1;
+}
+
+/* Animation for the 'explosion' */
+.nav-links li a:hover::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    animation: cannonballExplosion .4s ease-out forwards;
+    z-index: -1;
+}
+
+@keyframes cannonballExplosion {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+    max-width: 80%;
+    margin: 0 auto; 
+}
+
+.video-carousel {
+    flex: 0 0 70%;
+    overflow: hidden;
+    max-width: 50%; 
+    border-radius: 8px; 
+}
+
+.text-content {
+    flex: 1 1 10%;
+    margin-left: -10%;
+    padding-left: 20px;
+    margin-top: -10px;
+    font-size: 1.854em; 
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    text-align: justify;
+}
+
+.text-content h2, .text-content p {
+    color: #E0E0E0;
+    text-shadow:
+        1px 1px 0px #000,
+        2px 2px 0px #000,
+        2px 2px 3px #333,
+        3px 3px 3px #666;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #ddd 0%, #aaa 10%, #888 50%, #777 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.video-carousel video {
+    width: 80%; 
+    height: auto;
+    display: none;
+    margin: 10px 0; 
+}
+
+.video-carousel video.active {
+    display: block;
+}
+
+.scattered-images {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+    overflow: visible;
+}
+
+.scatter-img {
+    width: 20%;
+    max-width: 700px;
+    max-height: 700px;
+    position: absolute;
+    transition: all 0.3s ease;
+    transform: rotate(calc(var(--rotate) * 1deg));
+    z-index: 1;
+}
+
+.scatter-img:hover {
+    opacity: 0;
+    background-color: transparent;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: #000;
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 10px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .nav-links li a {
+        padding: 10px 15px;
+        font-size: 1em;
+        text-align: center;
+    }
+
+    /* Remove hover effects for mobile */
+    .nav-links li a::before,
+    .nav-links li a:hover::after {
+        display: none;
+    }
+
+    /* Simplify layout for mobile */
+    .content-wrapper {
+        flex-direction: column;
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .video-carousel, .text-content {
+        width: 100%;
+        margin: 0 0 20px 0;
+    }
+
+    .video-carousel {
+        flex: 1;
+        max-width: 100%;
+        border-radius: 0;
+    }
+
+    .video-carousel video {
+        width: 100%;
+        margin: 0;
+    }
+    
+    /* Optimize text content for mobile */
+    .text-content {
+        flex: 1;
+        margin: -10px 0px 0px 0px;
+        font-size: 1.05em;
+        padding: 15px 20px;
+        text-align: left;
+        line-height: 1.5;
+        max-width: 90%;
+        text-align: justify;
+    }
+    
+    .text-content h2, .text-content p {
+        color: #333;
+        text-shadow: none;
+        background: none;
+        -webkit-background-clip: none;
+        -webkit-text-fill-color: initial;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+    }
+
+    .text-content h2 {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+
+    .text-content p {
+        margin: 5px 0;
+    }
+
+    /* Modify for mobile image layout */
+    .scattered-images {
+        width: 90%;
+        margin: auto;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .scatter-img {
+        width: calc(25% - 10px);
+        aspect-ratio: 1 / 1;
+        max-width: none;
+        max-height: none;
+        position: static;
+        height: auto;
+        margin: 5px;
+        padding: 0;
+        transform: none;
+        --rotate: 0deg;
+        transition: transform 0.3s ease;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    /* Remove the opacity hover effect and add a zoom effect */
+    .scatter-img:hover {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+
+    /* Add shake effect on hover for mobile */
+    .nav-links li a:hover {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both infinite;
+    }
+
+    @keyframes shake {
+        10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+        
+        20%, 80% {
+            transform: translate3d(2px, 0, 0);
+        }
+
+        30%, 50%, 70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+
+        40%, 60% {
+            transform: translate3d(4px, 0, 0);
+        }
+    }
+}
