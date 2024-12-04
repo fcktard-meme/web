@@ -42,103 +42,374 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'U') {
             event.preventDefault();
             showVideoInTheBenin();
+        } else if (event.key === 'M') {
+            event.preventDefault();
+            fucktardCinema();
         }
+
     }
     });
-    function showVideoInTheBenin() {
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 10000;
-            background-color: rgba(0, 0, 0, 0.5); 
-        `;
+
+
+    function fucktardCinema() {
+        let currentVideoIndex = 0;
+        const videos = ['vhs.mp4', 'vhs2.mp4', 'vhs3.mp4', 'vhs4.mp4', 'vhs5.mp4', 'vhs6.mp4', 'vhs7.mp4', 'vhs8.mp4', 'vhs.mp4'];
+        let videoPlaying = false;
+        let overlay, videoPlayer;
+        let countdownTimer;
     
-        overlay.addEventListener('click', () => {
-            document.body.removeChild(overlay);
-        });
-    
-        document.body.appendChild(overlay);
-    
-        const effects = ['none', 'grayscale(100%)', 'sepia(100%)', 'hue-rotate(180deg)', 'invert(100%)', 'blur(5px)', 'brightness(50%)', 'contrast(200%)', 'saturate(3)', 'opacity(0.5)'];
-    
-        for (let i = 0; i < 10; i++) {
-            const video = document.createElement('video');
-            video.src = 'inthebeni.mp4';
-            video.loop = true;
-            video.muted = i > 0;
-    
-            // Initial size and position
-            let size = Math.random() * 300 + 100; // Random size between 100px and 400px
-            video.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: auto;
-                left: ${Math.random() * (window.innerWidth - size)}px;
-                top: ${Math.random() * (window.innerHeight - size)}px;
-                filter: ${effects[i % effects.length]};
-                z-index: ${10001 + i};
-                transition: all 1s ease-in-out;
+        function createOverlay() {
+            overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: black;
+                z-index: 9999;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             `;
     
-            video.addEventListener('loadedmetadata', function() {
-                this.play().catch(e => console.error('Video play failed:', e));
-                
-                // Function to animate the video
-                function animate() {
-                    setTimeout(() => {
-                        // Random behaviors
-                        const behaviors = ['zoom', 'dezoom', 'move', 'flip', 'halfScreen'];
-                        const behavior = behaviors[Math.floor(Math.random() * behaviors.length)];
+            // Ajout d'un effet statique à l'arrière-plan
+            const staticEffect = document.createElement('div');
+            staticEffect.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('static.gif'); /* Assurez-vous d'avoir un GIF statique */
+                opacity: 0.1;
+                animation: staticBlink 1s infinite;
+            `;
     
-                        switch(behavior) {
-                            case 'zoom':
-                                size = Math.min(size * 1.5, Math.min(window.innerWidth, window.innerHeight));
-                                break;
-                            case 'dezoom':
-                                size = Math.max(size / 1.5, 100);
-                                break;
-                            case 'move':
-                                video.style.left = Math.random() * (window.innerWidth - size) + 'px';
-                                video.style.top = Math.random() * (window.innerHeight - size) + 'px';
-                                break;
-                            case 'flip':
-                                video.style.transform = `scaleX(${Math.random() < 0.5 ? -1 : 1})`;
-                                break;
-                            case 'halfScreen':
-                                if(Math.random() < 0.5) {
-                                    size = window.innerHeight / 2;
-                                    video.style.width = size + 'px';
-                                    video.style.height = 'auto';
-                                    video.style.left = Math.random() < 0.5 ? '0' : (window.innerWidth - size) + 'px';
-                                    video.style.top = '0';
-                                } else {
-                                    size = window.innerWidth / 2;
-                                    video.style.width = 'auto';
-                                    video.style.height = size + 'px';
-                                    video.style.left = '0';
-                                    video.style.top = Math.random() < 0.5 ? '0' : (window.innerHeight - size) + 'px';
-                                }
-                                break;
-                        }
-                        video.style.width = size + 'px';
-                        
-                        // Continue animation unless overlay is removed
-                        if (document.body.contains(overlay)) {
-                            animate();
-                        }
-                    }, Math.random() * 3000 + 500); // Random delay between 500ms and 3500ms
-                }
+            // Animation d'ouverture des rideaux
+            const curtains = document.createElement('div');
+            curtains.innerHTML = `
+                <div class="curtain left" style="width: 50%; background: black; transition: all 2s;"></div>
+                <div class="curtain right" style="width: 50%; background: black; transition: all 2s;"></div>
+            `;
+            curtains.style.cssText = 'width: 100%; height: 100%; display: flex; position: absolute;';
     
-                animate();
-            });
+            // Vidéo principale centrée
+            videoPlayer = document.createElement('video');
+            videoPlayer.src = videos[currentVideoIndex];
+            videoPlayer.controls = false;
+            videoPlayer.style.maxHeight = '80%';
+            videoPlayer.style.maxWidth = '80%';
+            videoPlayer.style.position = 'relative';
+            videoPlayer.style.zIndex = '1'; // Pour passer au-dessus de l'effet statique
     
-            overlay.appendChild(video);
+            // Interface graphique old school
+            const playerUI = document.createElement('div');
+            playerUI.style.cssText = `
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 200px;
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2; // Pour passer au-dessus de la vidéo
+            `;
+    
+            // Boutons avec style DivX - sans le bouton Download
+            const controls = document.createElement('div');
+            controls.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                color: #00ff00;
+                font-family: 'Courier New', monospace;
+                text-shadow: 0 0 5px #00ff00;
+            `;
+            controls.innerHTML = `
+                <button style="background: black; border: 2px solid #00ff00; color: #00ff00; padding: 5px 10px; margin: 0 5px;" onclick="playPause()">Play/Pause</button>
+                <button style="background: black; border: 2px solid #00ff00; color: #00ff00; padding: 5px 10px; margin: 0 5px;" onclick="changeVideo()">Change Video</button>
+                <button style="background: black; border: 2px solid #00ff00; color: #00ff00; padding: 5px 10px; margin: 0 5px;" onclick="closeCinema()">Close</button>
+            `;
+    
+            playerUI.appendChild(controls);
+            overlay.appendChild(staticEffect);
+            overlay.appendChild(curtains);
+            overlay.appendChild(videoPlayer);
+            overlay.appendChild(playerUI);
+            document.body.appendChild(overlay);
+    
+            // Compte à rebours en ASCII
+            startCountdown();
+    
+            // Écouteur d'événement pour passer à la vidéo suivante
+            videoPlayer.addEventListener('ended', nextVideo);
         }
+    
+        function playPause() {
+            if (videoPlaying) {
+                videoPlayer.pause();
+            } else {
+                videoPlayer.play();
+            }
+            videoPlaying = !videoPlaying;
+        }
+    
+        function changeVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            videoPlayer.src = videos[currentVideoIndex];
+            videoPlayer.load();
+            videoPlayer.play();
+            videoPlaying = true;
+    
+            // Effet de scan line lors du changement de vidéo
+            const scanLine = document.createElement('div');
+            scanLine.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: repeating-linear-gradient(
+                    to bottom,
+                    transparent 0px,
+                    transparent 4px,
+                    rgba(255, 255, 255, 0.05) 4px,
+                    rgba(255, 255, 255, 0.05) 5px
+                );
+                animation: scanLineMove 3s linear forwards;
+            `;
+            overlay.appendChild(scanLine);
+            setTimeout(() => overlay.removeChild(scanLine), 3000);
+        }
+    
+        function closeCinema() {
+            clearInterval(countdownTimer);
+            overlay.style.display = 'none';
+            document.body.removeChild(overlay);
+        }
+    
+        function startCountdown() {
+            let countdown = 5; // Compte à rebours de 5 secondes
+            const asciiNumbers = [
+                "░▒▓████████▓▒░\n" +
+                "░▒▓█▓▒░       \n" +
+                "░▒▓█▓▒░       \n" +
+                "░▒▓███████▓▒░ \n" +
+                "       ░▒▓█▓▒░\n" +
+                "       ░▒▓█▓▒░\n" +
+                "░▒▓███████▓▒░ \n",
+            
+                "░▒▓█▓▒░░▒▓█▓▒░\n" +
+                "░▒▓█▓▒░░▒▓█▓▒░\n" +
+                "░▒▓█▓▒░░▒▓█▓▒░\n" +
+                "░▒▓████████▓▒░\n" +
+                "       ░▒▓█▓▒░\n" +
+                "       ░▒▓█▓▒░\n" +
+                "       ░▒▓█▓▒░\n",
+            
+                "░▒▓███████▓▒░ \n" +
+                "       ░▒▓█▓▒░\n" +
+                "       ░▒▓█▓▒░\n" +
+                "░▒▓███████▓▒░ \n" +
+                "       ░▒▓█▓▒░\n" +
+                "       ░▒▓█▓▒░\n" +
+                "░▒▓███████▓▒░ \n",
+            
+                "░▒▓███████▓▒░ \n" +
+                "       ░▒▓█▓▒░\n" +
+                "       ░▒▓█▓▒░\n" +
+                " ░▒▓██████▓▒░ \n" +
+                "░▒▓█▓▒░       \n" +
+                "░▒▓█▓▒░       \n" +
+                "░▒▓████████▓▒░\n",
+            
+                "░▒▓█▓▒░       \n" +
+                "░▒▓████▓▒░    \n" +
+                "   ░▒▓█▓▒░    \n" +
+                "   ░▒▓█▓▒░    \n" +
+                "   ░▒▓█▓▒░    \n" +
+                "   ░▒▓█▓▒░    \n" +
+                "   ░▒▓█▓▒░    \n"
+            ];
+            
+            const countdownElement = document.createElement('pre');
+            countdownElement.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #00ff00;
+                font-size: 12px;
+                font-family: 'Courier New', monospace;
+                text-shadow: 0 0 5px #ff0000;
+                line-height: 1;
+                white-space: pre;
+                z-index: 3;
+            `;
+            overlay.appendChild(countdownElement);
+            
+            countdownTimer = setInterval(() => {
+                // Afficher le chiffre de la position inverse
+                countdownElement.textContent = asciiNumbers[asciiNumbers.length - countdown];
+                if (countdown <= 0) {
+                    clearInterval(countdownTimer);
+                    overlay.removeChild(countdownElement);
+                    document.querySelector('.curtain.left').style.transform = 'translateX(-100%)';
+                    document.querySelector('.curtain.right').style.transform = 'translateX(100%)';
+                    videoPlayer.play();
+                    videoPlaying = true;
+                } else {
+                    countdown--;
+                }
+            }, 1000);
+        }
+    
+        function nextVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            videoPlayer.src = videos[currentVideoIndex];
+            videoPlayer.load();
+            videoPlayer.play();
+            videoPlaying = true;
+    
+            // Effet de scan line lors du changement de vidéo
+            const scanLine = document.createElement('div');
+            scanLine.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: repeating-linear-gradient(
+                    to bottom,
+                    transparent 0px,
+                    transparent 4px,
+                    rgba(255, 255, 255, 0.05) 4px,
+                    rgba(255, 255, 255, 0.05) 5px
+                );
+                animation: scanLineMove 3s linear forwards;
+            `;
+            overlay.appendChild(scanLine);
+            setTimeout(() => overlay.removeChild(scanLine), 3000);
+        }
+    
+        // Animation pour l'effet statique et scan line
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes staticBlink {
+                    0%, 100% { opacity: 0.1; }
+                    50% { opacity: 0.3; }
+                }
+                @keyframes scanLineMove {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(100%); opacity: 0; }
+                }
+            </style>
+        `);
+    
+        createOverlay();
+        window.playPause = playPause;
+        window.changeVideo = changeVideo;
+        window.closeCinema = closeCinema;
     }
+// VIDS
+function showVideoInTheBenin() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+        background-color: rgba(0, 0, 0, 0.5); 
+    `;
+
+    overlay.addEventListener('click', () => {
+        document.body.removeChild(overlay);
+    });
+
+    document.body.appendChild(overlay);
+
+    const effects = ['none', 'grayscale(100%)', 'sepia(100%)', 'hue-rotate(180deg)', 'invert(100%)', 'blur(5px)', 'brightness(50%)', 'contrast(200%)', 'saturate(3)', 'opacity(0.5)'];
+
+    for (let i = 0; i < 10; i++) {
+        const video = document.createElement('video');
+        video.src = 'inthebeni.mp4';
+        video.loop = true;
+        video.muted = i > 0;
+
+        // Initial size and position
+        let size = Math.random() * 300 + 100; // Random size between 100px and 400px
+        video.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: auto;
+            left: ${Math.random() * (window.innerWidth - size)}px;
+            top: ${Math.random() * (window.innerHeight - size)}px;
+            filter: ${effects[i % effects.length]};
+            z-index: ${10001 + i};
+            transition: all 1s ease-in-out;
+        `;
+
+        video.addEventListener('loadedmetadata', function() {
+            this.play().catch(e => console.error('Video play failed:', e));
+            
+            // Function to animate the video
+            function animate() {
+                setTimeout(() => {
+                    // Random behaviors
+                    const behaviors = ['zoom', 'dezoom', 'move', 'flip', 'halfScreen'];
+                    const behavior = behaviors[Math.floor(Math.random() * behaviors.length)];
+
+                    switch(behavior) {
+                        case 'zoom':
+                            size = Math.min(size * 1.5, Math.min(window.innerWidth, window.innerHeight));
+                            break;
+                        case 'dezoom':
+                            size = Math.max(size / 1.5, 100);
+                            break;
+                        case 'move':
+                            video.style.left = Math.random() * (window.innerWidth - size) + 'px';
+                            video.style.top = Math.random() * (window.innerHeight - size) + 'px';
+                            break;
+                        case 'flip':
+                            video.style.transform = `scaleX(${Math.random() < 0.5 ? -1 : 1})`;
+                            break;
+                        case 'halfScreen':
+                            if(Math.random() < 0.5) {
+                                size = window.innerHeight / 2;
+                                video.style.width = size + 'px';
+                                video.style.height = 'auto';
+                                video.style.left = Math.random() < 0.5 ? '0' : (window.innerWidth - size) + 'px';
+                                video.style.top = '0';
+                            } else {
+                                size = window.innerWidth / 2;
+                                video.style.width = 'auto';
+                                video.style.height = size + 'px';
+                                video.style.left = '0';
+                                video.style.top = Math.random() < 0.5 ? '0' : (window.innerHeight - size) + 'px';
+                            }
+                            break;
+                    }
+                    video.style.width = size + 'px';
+                    
+                    // Continue animation unless overlay is removed
+                    if (document.body.contains(overlay)) {
+                        animate();
+                    }
+                }, Math.random() * 3000 + 500); // Random delay between 500ms and 3500ms
+            }
+
+            animate();
+        });
+
+        overlay.appendChild(video);
+    }
+}
 // ONTHEVERGE
 function startSnakeGame() {
     console.log("Game starting...");
