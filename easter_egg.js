@@ -45,11 +45,230 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'M') {
             event.preventDefault();
             fucktardCinema();
+        } else if (event.key === 'N') {
+            event.preventDefault();
+            canonNuts();
+        }else if (event.key === 'S') {
+            event.preventDefault();
+            Treasure();
         }
+
 
     }
     });
+    function Treasure() {
+        // Create overlay for the initial screen
+        let overlay = document.createElement('div');
+        overlay.style = 'position:fixed; width:100%; height:100%; top:0; left:0; background:black; z-index:1001; display: flex; justify-content: center; align-items: center;';
+    
+// Create and style the pre element for the centered message
+let pre = document.createElement('pre');
+pre.style = 'color: #FFD700; font-family: monospace; font-size: 20px;';
+overlay.appendChild(pre);
 
+// Using template literal for multi-line text
+let text = `Loading Treasure...
+
+                            -#@%%%%%%%%%%%%%-                                             
+                           *@%%%%%%%%%%%%%%%%+                                            
+                          *%%%%%%%%%%%%%%%%%%%*                                           
+                         :%%%%%%%%%%%%%%%%%%%%%%:                                         
+                         +%%%%%%%%%%%%%%%%%%%%%%@=                                        
+                         %%%%%%%%%%%%%%%%%%%%%%%%@#:                                      
+                        -%%%%%%%%%%%%%%%%%%%%%%%%%%@*-::..   ..                           
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@%+                         
+                       +%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@%%@%%%@#*+=:                    
+                      .@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@%%@@%%%@@%%@@%#+:                
+                      #@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%@@%@%%@%%%%%%@@@%=.             
+                     =@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@%@@%@@%%%%%%%%%%%@#-           
+                     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%@%@@%%%%%%%%%%%%%%@#          
+                    -@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@%%@%@@%%%%%%%%%%%%%%%%#         
+                    +@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@%%%@%@@%%%%%%%%%%%%%%%%%#:       
+                    -@@@@@@@%@@@%%%%%%%%%%%%%%%%%%%%%%%@@%%@@%%%%%%%%%%%%%%%%%%%%%@#.     
+                     #@@@@*-+@@@@@@@@%%%%%%%%%%%%%%%%%%%@%%@@%%%%%%%%%%%%%%%%%%%%%%%@=    
+                      *@*:-%@@@@@@@@@@@@@%%%%%%%%%%%%%%%@@%@%%%%%%%%%%%%%%%%%%%%%%%%%%#:  
+                   .#%%%##@@@@@@@@@@@@%--+%@%%%%%%%%%%%%@@%@%%%%%%%%%%%%%%%@@%%%%%%%%%%@+ 
+                   ##%%####%@@@@@:-==:   :#=#@@%%%%%%%%%@@@@%%%%%%%%%%%%%%%@@%%%%%%%%%%%@*
+                  =%*++*#%###%@@@-      =#.-#:%#@%%%%%%%%%@@%%%%%%%%%%%@%%%@%%%%%%%%%%%%%%
+                  **=+++++#%###@@:    :#=.#+-#- :*@@%%%%%%@@%%%%%%%%%%@@%%%@%%%%%%%%%%%%%%
+*++++====---:..   =#==+++++*%####    **.=#-*+   -%@@@@@%%%@@%%%%%%%%%%@@%%@@%%%%%%%%%%%%%%
+++++++++****+++**: #+==+++++*%####.=#-=#+**.  -#@@@@@@@@@%@%%%%%%%%%%%@@%%@@%%%%%%%%%%%%%%
+++++++++++++++++*%..#==+====+=#%##%-=#=+#. -*%@@@@@@@@@@@@@%%%%%%%%%%%@@%%@@%%%%%%%%%%%%%%
++++++++++++++++++## .*+==--=++=*%#%*:=%*+#@@@@@@@@@@@@@@@@%%%%%%%%%%%%@@%@@%%%%%%%%%%%%%%%
++++++++++++++++++*#+  =*==--+++=%#%*#+::=#@@@@@@@@@@@@@@%%%%%%%%%%%%%%%@@@@%%%%%%%%%%%%%%%
+++++++++++++++++++*%:  .+*+=++-=*%%@:     @%@@@@@@@@@@@%%%%%%%%%%%%%%%%%@@@%%%%%%%%%%%%%%%
++++++++++++++++++++*%    @%*+===*@@@.     -@%@%%%@@@@@%%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%
++++++++++++++++++++*#=   *@@@%##%@%%@+     %%@@%%%%%%@%%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%
+++++++++++++++++++++*#.   @@@@%@@@@%%@@#+. %%%@@%%%%%@@%%%%%%%%%%%%%%%%%%%@%%%%%%%%%%%%%%%
++++++++++++++++++++++*#  -@@@@@@@@@%%@@@%@%@@%%@%%%%%@@%%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%
++++++++++++++++++++++*#+  #@@@@@@@@%%%@@%%%%%@@@@%%%%@@%%%%%%%%%%%%%%%%%%%@@%%%%%%%%%@@@@@
+**++++++++++++++++++++*%: =@@@@@@@@%%%%@%%%%%%%@@%%%%%@@%%%%%%%%%%%%%%%%%%%@@%%%%%@@@@@%%%
+*****++++++++++++++++++*%  #@@@@@@@%%@@@%%%%%%%@@%%%%%@@@@@@@@@@%@@@@%%%%@@@@@@@@@@@@@@%%%
+%*******+++++++++++++++*#+ -@@@@@@@@@@@@%%%%%%%%@@@@@@@@@%%%%%@@%%%%%%@@%%%%%%%%@@@@@@@@@%
+@%#******+*+++++++++++++*%: @@@@@@@@@@@%%%%%@@@@@@%%%%%%%%%%%%@@@%%%%%%%%@@%%%%%%@@%%%%%%%
+@@%#********+++++++++++++*%=@@@@%@@@@@%%%@@@@@%%%%@@@@@%%%%%%%%@@%%%%%%%%%@@%%%%%%@@%%%%%%
+@@@%#********++++++++++++*%@#*****#%%%@@@@@@@%@%%%@@@@@@%%%%%%@@@%%%%%%%%%%@@%%%%%%@@@%%%%
++%%@%#***********+++++++++*%*+++++***#@@@@@@@@@%%%%%@@@@@%%%%@@@@%%%%%%%%%%%@@%%%%%%%@@%%%
++#%%@%#***********+*++++++*##*+++++*%@@@@@@@@%%@@@%%%@@%@@@@@@@@@%%%%%%%%%%%%@@%%%%%%@@@%@
+%%%%%@%##***********+++++++*%#*+++*%@@@@@@@%%@@@@%%%%%%@@@%%@@@@%%%%%%%%%%%%%%@@@@@@%%@@@@
+@%%%@@@%%###*********++++++*#%*+++*@@%@@@%%@@@@%%%@@@%%%##%%@@@@%%%%%%%%%%%%%%%%@@@@@@@@@@
+@@%%%@%%@@%%##*******+++++++*#%*+++#%%@@@@@@@@%%%%%###****#@*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@%%%%%#%%%%%#*****+++++++*%#*++****#%%##%##*****##%%%%%*..=++*%#++**#####*+++==-::=*#%
+`;
+
+let i = 0;
+
+// Function to simulate typewriter effect
+function typeWriter() {
+    if (i < text.length) {
+        pre.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 5); // Speed of typing (5ms for very fast typing)
+    } else {
+        // Once typing is done, wait 5 seconds before explosion
+        setTimeout(explode, 5000);
+    }
+}
+
+// Function to simulate explosion (you might want to use CSS animations or add visual effects)
+function explode() {
+    pre.textContent = "💥 EXPLOSION! 💥";
+    pre.style.transition = 'all 0.5s ease';
+    pre.style.color = 'red';
+    pre.style.fontSize = '40px';
+    pre.style.transform = 'scale(1.5)'; // Scale up for explosion effect
+}
+
+// Start the typewriter effect
+typeWriter();
+pre.style = 'color: #FFD700; font-family: monospace; font-size: 20px;';
+overlay.appendChild(pre);
+        // Add overlay to the document
+        document.body.appendChild(overlay);
+    
+        // Remove overlay after 5 seconds
+        setTimeout(function() {
+            document.body.removeChild(overlay);
+    
+            // Here we continue with the original Treasure function
+            overlay = document.createElement('div');
+            overlay.style = 'position:fixed; width:100%; height:100%; top:0; left:0; background:black; z-index:1000;';
+            
+            
+            
+            // Create ASCII art for treasure chest
+            let treasureChest = `
+                             ______
+                          ,-' ;  ! \`-. 
+                         / :  !  :  . \\
+                        |_ ;   __:  ;  |
+                        )| .  :)(.  !  |
+                        |"    (##)  _  |
+                        |  :  ;\`'  (_) (
+                        |  :  :  .     |
+                        )_ !  ,  ;  ;  |
+                        || .  .  :  :  |
+                        |" .  |  :  .  |
+                        |____;----.____|
+            `;
+            
+            
+            // Create and style the pre element for ASCII art
+            let preArt = document.createElement('pre');
+            preArt.innerHTML = `
+            <pre>
+            8b    d8 88b 88 888888 Yb        dP 88""Yb 88 .dP"Y8   888888 88""Yb 888888    db    .dP"Y8 88   88 88""Yb 888888 
+            88b  d88 88Yb88 88__    Yb  db  dP  88__dP 88 \`Ybo."     88   88__dP 88__     dPYb   \`Ybo." 88   88 88__dP 88__   
+            88YbdP88 88 Y88 88""     YbdPYbdP   88""Yb 88 o.\`Y8b     88   88"Yb  88""    dP__Yb  o.\`Y8b Y8   8P 88"Yb  88""   
+            88 YY 88 88  Y8 888888    YP  YP    88oodP 88 8bodP'     88   88  Yb 888888 dP""""Yb 8bodP' \`YbodP' 88  Yb 888888 
+            </pre>
+            `;
+            preArt.style = 'color: #FFD700; font-family: monospace; font-size: 16px; max-width: 800px; white-space: pre-wrap; word-wrap: break-word; position: absolute; top: 0; left: 0;';
+            overlay.appendChild(preArt);
+        
+            // Create text input with transparent border and placeholder
+            let input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'enter the code';
+            input.style = 'width: 100px; color: #FFF; background: black; border: 0; padding: 5px; text-align: center; position: absolute; top: 370px; left: 255px;';
+            
+            // Append the input field
+            overlay.appendChild(input);
+        
+            // Add overlay to the document
+            document.body.appendChild(overlay);
+        
+            // Event listener for input change or keyup (for real-time checking)
+            input.addEventListener('input', function() {
+                if (this.value === '2021') {
+                    animateBookOpening(overlay, preArt.offsetWidth);  
+                    this.style.display = 'none';  
+                }
+            });
+        
+            // Function to make the pre element blink with different colors
+            function blinkColors() {
+                const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
+                let colorIndex = 0;
+                setInterval(() => {
+                    preArt.style.color = colors[colorIndex];
+                    colorIndex = (colorIndex + 1) % colors.length;
+                }, 500); // Change color every 500ms
+            }
+        
+            // Function to gradually reveal the treasure chest as if coming out of shadow
+            function revealTreasure() {
+                let lines = treasureChest.split('\n');
+                let revealInterval = setInterval(() => {
+                    if (lines.length > 0) {
+                        let line = lines.shift();
+                        preArt.innerHTML += line + '\n';
+                    } else {
+                        clearInterval(revealInterval);
+                    }
+                }, 100); // Reveal each line every 100ms
+            }
+        
+            // Start blinking colors
+            blinkColors();
+        
+            // Start revealing the treasure chest
+            revealTreasure();
+        }, 25000); // 5000 milliseconds = 5 seconds
+    }
+    
+    // Keep the animateBookOpening function as it was before
+    function animateBookOpening(element, preWidth) {
+        // ... (existing code for animateBookOpening)
+    }
+    
+    function animateBookOpening(element, preWidth) {
+        let story = "In the digital age of memecoins, where every new token could either be a treasure or a trap, there was one that stood out with its audacious name: Fucktard, created by the mysterious mnewbis.\n\nOne evening, as the city lights began to twinkle, a young investor named Mia sat in her apartment, the feel of her day's work still lingering. She had just received a letter from mnewbis, an unusual communication that came directly to her inbox. It was a notice about an upcoming event for Fucktard, hinting at a possible \"pump\" or a \"dump.\"\n\nDeciding to take a break from the screen, Mia went for a walk. The night was cool, and as she walked, she felt the need to pull over to the side of the road, where she noticed something peculiar - a snake, slithering away from her path. It reminded her of mnewbis's cryptic messages, always full of hidden meanings.\n\nBack at home, her phone buzzed with notifications. The crypto world was in chaos; a bullet-like drop had occurred in Fucktard's value. Mia's heart raced as she saw the charts plummet, her investment now in jeopardy. She knew this was the nature of the game, where people could either rise to the stars or fall into oblivion.\n\nShe moved to her high window, looking out over the city, pondering her next move. In her room, surrounded by charts and tech gadgets, she felt the weight of her decisions. The fabric of this digital society was thin, woven with threads of speculation and hope.\n\nThen came an unexpected turn of events. A new update from mnewbis suggested there might be a benefit to holding onto Fucktard. It was a wild claim, but in this game, wild was the norm. Mia, with a newfound resolve, decided to hold, trusting in the community's strength.\n\nAs she sat back down, her eyes caught a patch on her jacket - a small emblem of a coin with wings, a symbol of her journey in the crypto world. It was a reminder of why she loved this chaotic, exhilarating space.\n\nThe night deepened, and Mia felt a mix of anticipation and caution. The journey with Fucktard was unpredictable, like navigating through a maze with each turn more surprising than the last. But for now, she was in it, for better or worse, with every decision a step towards understanding this wild, digital frontier.\n\nThis tale captures the essence of the crypto world's volatility, the community spirit, and the personal journey of an investor, all while adhering to the sequence of words you've specified.";
+        
+        let i = 0;
+        let storyPre = document.createElement('pre');
+        storyPre.style = `
+            max-width: 830px; 
+            color: white; 
+            font-family: Arial, sans-serif; 
+            font-size: 16px; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            position: absolute; 
+            top: 230px;
+            left: 450px;
+        `;
+        element.appendChild(storyPre);
+    
+        let interval = setInterval(function() {
+            if (i < story.length) {
+                storyPre.textContent += story[i];  
+                i++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 20); // Speed of typing
+    }
 
     function fucktardCinema() {
         let currentVideoIndex = 0;
