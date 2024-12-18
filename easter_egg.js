@@ -48,7 +48,7 @@ document.addEventListener('keydown', function(event) {
         } else if (event.key === 'N') {
             event.preventDefault();
             canonNuts();
-        }else if (event.key === 'S') {
+        }else if (event.key === '') {
             event.preventDefault();
             Treasure();
         }
